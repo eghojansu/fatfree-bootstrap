@@ -1,0 +1,19 @@
+{
+	"name": "eghojansu/fatfree-bootstrap",
+	"description": "Fatfree simple fast bootstrap, with some usefull helper and abstract classes",
+	"homepage": "https://github.com/eghojansu/fatfree-bootstrap",
+	"license": "MIT",
+	"require": {
+		"php": ">=5.4",
+        "bcosca/fatfree": "3.5.1"
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/eghojansu/fatfree-bootstrap"
+		}
+	],
+	"autoload": {
+		"files": ["app/App.php"]
+	}
+}

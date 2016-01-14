@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+    "settings": {
+        "xdebug": {
+             "url": "http://localhost:5615/project/fa/fatfree-bootstrap/",
+        }
+    }
+}

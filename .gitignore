@@ -1,0 +1,6 @@
+pool/*
+skip/*
+vendor/*
+*.lock
+*.sublime-workspace
+!.htaccess
