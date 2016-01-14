@@ -18,10 +18,12 @@ git remote rm origin
 
 then you can start develop your apps.
 
-### Archive project
+### Archive project (using git)
+
+This is a simple command
 
 ```console
-composer archive vendor/package [version] --format=[tar|zip] --dir=[.|path/to/dir]
+git archive -o path/to/filename.zip --prefix=pathprefix/ [version tag]
 ```
 
 
