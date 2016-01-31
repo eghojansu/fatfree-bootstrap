@@ -7,7 +7,7 @@ Fatfree simple fast bootstrap, with some usefull helper and abstract classes
 execute
 
 ```console
-composer create-project eghojansu/fatfree-bootstrap [application-path] --repository-url=https://github.com/eghojansu/fatfree-bootstrap.git
+composer create-project eghojansu/fatfree-bootstrap [application-path]
 ```
 
 if you dont want have a remote origin you can remove it with this syntax,
@@ -28,5 +28,6 @@ git archive -o path/to/filename.zip --prefix=pathprefix/ [version tag]
 
 
 Happy code,
+
 
 fa/eghojansu
