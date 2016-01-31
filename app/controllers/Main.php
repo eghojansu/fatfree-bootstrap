@@ -2,10 +2,12 @@
 
 namespace controllers;
 
-class Main extends \AbstractController
+use App;
+
+class Main
 {
     public function home()
     {
-        $this->setContent('main/home.htm');
+        App::render('main/home.htm');
     }
 }

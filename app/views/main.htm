@@ -10,7 +10,9 @@
 
     <div class="container">
     	<div class="row">
-    		<div class="col-xs-12">{{ @CONTENT | raw }}</div>
+    		<div class="col-xs-12">
+                <include href="{{ @content }}" />
+            </div>
     	</div>
     </div>
 

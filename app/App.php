@@ -226,4 +226,22 @@ final class App
 
         return $content;
     }
+
+    /**
+     * Render template view
+     * @param  string $view
+     * @param  string $template
+     * @param  string $key
+     * @return null
+     */
+    public static function render($view, $template = null, $key = 'content')
+    {
+        $app = Base::instance();
+        $template = $template?:$app->get('app.template');
+        if ($template) {
+            $app->set($key, $view);
+            echo Template::instance()->render($template);
+        } else
+            echo Template::instance()->render($view);
+    }
 }
