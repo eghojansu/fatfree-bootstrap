@@ -3,9 +3,10 @@
 namespace tests;
 
 use App;
+use Controller;
 use Test as Tester;
 
-class Test extends \AbstractController
+class Test extends Controller
 {
     protected $template = 'tests/ui/layout.htm';
 
@@ -14,8 +15,9 @@ class Test extends \AbstractController
         $app->set('CONTENT', 'Welcome to test dashboard, pick your test in sidebar list');
     }
 
-    public function beforeroute($app,$params)
+    public function beforeroute($app, $params)
     {
+        parent::beforeroute($app, $params);
         $app->set('tests.active', ltrim($app->rel($app->get('URI')), '/'));
         $menu = $app->get('tests.menu');
         foreach (App::dirContent(__DIR__.'/unit') as $file) {
@@ -23,6 +25,13 @@ class Test extends \AbstractController
             $menu['test/'.strtolower($file)] = App::titleIze($file);
         }
         $app->set('tests.menu', $menu);
+    }
+
+    public function afterroute($app, $params)
+    {
+        $view = $this->template;
+        $this->template = null;
+        $this->render($view);
     }
 
     protected function newTest()

@@ -19,21 +19,6 @@ class AppTest extends \tests\Test
         ];
         $test->message('::'.implode(', ::', $methodOK).' ok');
         $test->message('::'.implode(', ::', $methodSkip).' skipped');
-        $db = App::database();
-        $test->expect(
-            $db instanceOf \DB\SQL,
-            '::database');
-        $map = App::map('gejala');
-        $test->expect(
-            $map instanceOf \DB\SQL\Mapper,
-            '::map');
-        $test->expect(
-            $map->load()->valid(),
-            '::map valid, content '.var_export($map->cast(),true));
-        $newID = App::newID($map, 'kode_gejala', 'GJB{99}');
-        $test->expect(
-            !empty($newID),
-            '::newID generate right new id '.$newID);
         $arraySource = ['b'=>10];
         $generatedArray = App::prependKey($arraySource);
         $expectedArray = [':b'=>10];

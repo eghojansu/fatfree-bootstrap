@@ -85,70 +85,6 @@ final class App
     }
 
     /**
-     * Construct DB\SQL
-     * @return DB\SQL
-     */
-    public static function database()
-    {
-        if (!Registry::exists('database')) {
-            $db = Base::instance()->get('database');
-
-            return Registry::set('database', new DB\SQL(
-                'mysql:host='.$db['host'].';port='.$db['port'].';dbname='.$db['name'],
-                $db['user'],
-                $db['password']
-            ));
-        }
-
-        return Registry::get('database');
-    }
-
-    /**
-     * Construct SQL Mapper
-     * @param string $table
-     * @param DB\SQL $db
-     * @return DB\SQL\Mapper
-     */
-    public static function map($table, DB\SQL $db = null)
-    {
-        return new DB\SQL\Mapper($db?:self::database(), $table);
-    }
-
-    /**
-     * Generate new ID based on format
-     * @param DB\Cursor $map
-     * @param string $columName
-     * @param string $format
-     * @return string
-     */
-    public static function newID($map, $columnName, $format)
-    {
-        $clone = clone $map;
-        $clone->load(null, [
-            'limit'=>1,
-            'order'=>$columnName.' desc',
-            ]);
-
-        $last = 0;
-        $boundPattern = '/\{([a-z0-9\- _\.]+)\}/i';
-        if ($clone->valid()) {
-            $pattern = preg_replace_callback($boundPattern, function($match) {
-                return is_numeric($match[1])?
-                    '(?<serial>'.str_replace('9', '[0-9]', $match[1]).')':
-                    '(?<date>.{'.strlen(date($match[1])).'})';
-            }, $format);
-            if (preg_match('/^'.$pattern.'$/i', $clone[$columnName], $match))
-                $last = $match['serial']*1;
-        }
-
-        return preg_replace_callback($boundPattern, function($match) use ($last) {
-            return is_numeric($match[1])?
-                str_pad($last+1, strlen($match[1]), '0', STR_PAD_LEFT):
-                date($match[1]);
-        }, $format);
-    }
-
-    /**
      * Send json
      * @param array $output
      */
@@ -225,23 +161,5 @@ final class App
             }
 
         return $content;
-    }
-
-    /**
-     * Render template view
-     * @param  string $view
-     * @param  string $template
-     * @param  string $key
-     * @return null
-     */
-    public static function render($view, $template = null, $key = 'content')
-    {
-        $app = Base::instance();
-        $template = $template?:$app->get('app.template');
-        if ($template) {
-            $app->set($key, $view);
-            echo Template::instance()->render($template);
-        } else
-            echo Template::instance()->render($view);
     }
 }

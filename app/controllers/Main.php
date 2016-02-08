@@ -3,11 +3,12 @@
 namespace controllers;
 
 use App;
+use Controller;
 
-class Main
+class Main extends Controller
 {
     public function home()
     {
-        App::render('main/home.htm');
+        $this->render('main/home.htm');
     }
 }
