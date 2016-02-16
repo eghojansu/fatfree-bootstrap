@@ -6,4 +6,4 @@ $config = [
     'DEBUG'=>3,
 ];
 
-App::initBase($config)->run();
+Nutrition::bootstrap($config)->run();

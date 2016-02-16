@@ -1,13 +1,10 @@
 {
 	"name": "eghojansu/fatfree-bootstrap",
-	"description": "Fatfree simple fast bootstrap, with some usefull helper and abstract classes",
+	"description": "Fatfree framework and nutrition simple fast bootstrap, with some usefull helper and abstract classes",
 	"homepage": "https://github.com/eghojansu/fatfree-bootstrap",
 	"license": "MIT",
 	"require": {
 		"php": ">=5.4",
-        "eghojansu/nutrition": "0.1.0"
-	},
-	"autoload": {
-		"files": ["app/App.php"]
+        "eghojansu/nutrition": "0.2.3"
 	}
 }

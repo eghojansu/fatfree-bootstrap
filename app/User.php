@@ -1,58 +1,31 @@
 <?php
 
-/**
- * Simple user class
- *
- * @author  Eko Kurniawan <fkurniawan@outlook.com>
- */
-class User
+use Nutrition\Security\UserProviderInterface;
+
+class User implements UserProviderInterface
 {
-    const SESSION_ID = 'faapps';
-    private static $data = [];
-
-    public static function isGuest()
+    public function authenticate($username)
     {
-        return empty(Base::instance()->get('SESSION.'.self::SESSION_ID));
+        return true;
     }
 
-    public static function wasLogged()
+    public function loadUserData($id)
     {
-        return !self::isGuest();
+        // loading
     }
 
-    public static function is($type)
+    public function getSessionID()
     {
-        return self::data('type')===$type;
+        return 'faapps';
     }
 
-    public static function clear()
+    public function getPassword()
     {
-        Base::instance()->clear('SESSION.'.self::SESSION_ID);
+        return 'password';
     }
 
-    public static function save($id, $type, $data)
+    public function getID()
     {
-        self::$data = [
-            'id'=>$id,
-            'type'=>$type,
-            'data'=>$data,
-            ];
-        Base::instance()->set('SESSION.'.self::SESSION_ID, self::$data);
-    }
-
-    public static function info($name)
-    {
-        $info = self::data('info');
-
-        return isset($info[$name])?$info[$name]:null;
-    }
-
-    public static function data($name = null)
-    {
-        if (empty(self::$data)) {
-            self::$data = Base::instance()->get('SESSION.'.self::SESSION_ID);
-        }
-
-        return $name?(isset(self::$data[$name])?self::$data[$name]:null):self::$data;
+        return 1;
     }
 }

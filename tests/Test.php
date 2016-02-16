@@ -2,7 +2,7 @@
 
 namespace tests;
 
-use App;
+use Nutrition;
 use Controller;
 use Test as Tester;
 
@@ -20,9 +20,9 @@ class Test extends Controller
         parent::beforeroute($app, $params);
         $app->set('tests.active', ltrim($app->rel($app->get('URI')), '/'));
         $menu = $app->get('tests.menu');
-        foreach (App::dirContent(__DIR__.'/unit') as $file) {
+        foreach (Nutrition::dirContent(__DIR__.'/unit') as $file) {
             $file = basename($file, '.php');
-            $menu['test/'.strtolower($file)] = App::titleIze($file);
+            $menu['test/'.strtolower($file)] = Nutrition::titleIze($file);
         }
         $app->set('tests.menu', $menu);
     }
