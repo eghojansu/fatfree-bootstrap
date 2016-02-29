@@ -1,129 +1,60 @@
 /**
- * Sispak Style
- *
  * @author Eko Kurniawan <fkurniawan@outlook.com>
  */
 
-/* home content
+.trigger-notif {
+	display: none;
+}
+
+/**
+ * panel control
  */
-.home-content {
-	margin-top: 20px;
-	margin-bottom: 20px;
+.panel-control {
+    border: none;
+    margin-top: 30px;
 }
 
-.home-content .link-cage {
-	padding-bottom: 30px;
-	border-bottom: solid 3px #ccc;
-}
-
-.home-content .link {
-	margin: 5px;
-	width: 150px;
-	display: inline-block;
-}
-
-.home-content .link a,
-.home-content .link a span {
-	display: block;
-}
-
-.home-content .link a {
-	border: solid 1px transparent;
-	padding: 10px;
-}
-
-.home-content .link a:hover {
-	text-decoration: none;
-	border-color: #23527c;
-}
-
-.home-content .link a span.text {
-	margin-top: 15px;
-}
-
-/* login
+/**
+ * page control
  */
-.login {
-	max-width: 300px;
-	margin: 40px auto;
+.page-control {
+    padding: 0 20px;
+}
+.page-control .page-control-info {
+    margin-right: 10px;
+    color: #999;
 }
 
-.login h1 {
-	font-size: 20px;
-	text-align: center;
-	margin-bottom: 30px;
-}
-
-.login .alert {
-	margin-bottom: 30px;
-}
-
-.login .input-group {
-	margin-bottom: 10px;
-}
-
-/* register 
+/** detail
  */
-.register {
+table.detail td:first-child {
+	width: 200px;
 }
 
-.register h1, .register h3 {
-	text-align: center;
+.add-space {
+	margin: 0 5px;
 }
 
-.register h1 {
-	font-size: 24px;
-}
-
-.register h3 {
-	font-size: 18px;
-	margin-bottom: 30px;
-}
-
-.register .alert {
-	margin-bottom: 30px;
-}
-
-/* user content
+/** @override default
  */
-.user-content {
-	margin-top: 30px;
-	margin-bottom: 30px;
+.bootstrap-datetimepicker-widget.dropdown-menu {
+	opacity: 1;
+	visibility: visible;
+}
+.navbar .navbar-nav > li.active > a {
+	background: #1DC7EA;
+	color: white;
 }
 
-.user-content header {
-	border-bottom: solid 2px #999;
-	margin-bottom: 30px;
+.breadcrumb {
+	margin: 0 0 10px;
 }
 
-.user-content header .page-header {
-	margin-top: 10px;
+.main-panel > .content {
+	padding: 0 5px;
 }
 
-.user-content .page-title {
-	font-size: 22px;
-	margin-top: 0;
-	padding-bottom: 10px;
-	margin-bottom: 15px;
-	border-bottom: solid 1px #999;
-}
-
-.konsultasi form.form-konsultasi {
-	max-width: 600px;
-}
-
-.konsultasi form.form-konsultasi .gejala {
-	max-height: 300px;
-	overflow: auto;
-	margin-bottom: 30px;
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
-
-.konsultasi form.form-konsultasi .gejala .checkbox:hover label {
-	color: #3366FF;
-}
-
-.konsultasi table td:first-child {
-	width: 150px;
+.input-sm {
+	padding-top: 1px;
+	padding-bottom: 1px;
 }

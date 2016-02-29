@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ @roles }}</h4>
+                    <p class="category">Input</p>
+                </div>
+
+                <div class="content">
+                    <form method="post" class="form-horizontal">
+                        <check if="{{ @error = Nutrition::flash('error') }}">
+                            <div class="hide trigger-notif" data-type="warning" data-icon="attention">{{ @error }}</div>
+                        </check>
+
+                        <div class="form-group">
+                            <label for="role_name" class="col-md-2">{{ @model->getLabel('role_name') }}</label>
+                            <div class="col-md-10"><input type="text" name="role_name" value="{{ @model->role_name }}" placeholder="{{ @model->getLabel('role_name') | lower }}" class="form-control" required></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="role_description" class="col-md-2">{{ @model->getLabel('role_description') }}</label>
+                            <div class="col-md-10"><input type="text" name="role_description" value="{{ @model->role_description }}" placeholder="{{ @model->getLabel('role_description') }} || lower" class="form-control"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="role_homepage" class="col-md-2">{{ @model->getLabel('role_homepage') }}</label>
+                            <div class="col-md-10"><input type="text" name="role_homepage" value="{{ @model->role_homepage }}" placeholder="{{ @model->getLabel('role_homepage') | lower }}" class="form-control"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-2">
+                                <button type="submit" class="btn btn-primary btn-fill">{{ @save }}</button>
+                                <a href="{{ 'rbacRole' | url }}" class="btn btn-default">{{ @cancel }}</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>

@@ -1,0 +1,46 @@
+<div class="header">
+    <h4 class="title">{{ @role_list }}</h4>
+</div>
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>{{ @model2->getLabel('role_name') }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <check if="{{ @can.role.insert }}">
+            <tr>
+                <td colspan="2"></td>
+                <td>
+                    <form method="post" class="form-inline">
+                        <div class="form-group">
+                            <label for="roles[]" class="sr-only">{{ @model2->getLabel('role_name') }}</label>
+                            <select class="use-selectpicker" name="roles[]" data-style="btn-fill btn-default btn-sm" data-actions-box="true" data-selected-text-format="count" multiple>
+                                <repeat group="{{ @freeRoles }}" value="{{ @item }}">
+                                    <option value="{{ @item.role_id }}">{{ @item.role_name }}</option>
+                                </repeat>
+                            </select>
+                        </div>
+                        <button class="btn btn-fill btn-sm btn-primary" id="add-role">{{ @add }}</button>
+                    </form>
+                </td>
+            </tr>
+        </check>
+        <repeat group="{{ @roles }}" value="{{ @item }}" counter="{{ @no }}">
+            <tr>
+                <td>{{ @no }}</td>
+                <td>{{ @item.role_name }}</td>
+                <td>
+                    <check if="{{ @can.role.delete }}">
+                        <a href="{{ 'rbacUserDeleteRole', 'role='.@item.role_id | url }}" class="confirm-delete btn btn-fill btn-xs btn-danger"><i class="fa fa-remove"></i> {{ @delete_entry }}</a>
+                    </check>
+                </td>
+            </tr>
+        </repeat>
+    </tbody>
+</table>
+<check if="{{ @error }}">
+    <div class="trigger-notif" data-type="warning" data-icon="attention">{{ @error }}</div>
+</check>

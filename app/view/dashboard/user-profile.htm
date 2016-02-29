@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ @user_profile }}</h4>
+                </div>
+
+                <div class="content">
+                    <form method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="fullname" class="col-md-3">{{ @app.user->provider->profile->getLabel('username') }}</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" name="fullname" value="{{ @app.user->provider->profile->fullname }}" placeholder="{{ @app.user->provider->profile->getLabel('username') | lower }}" required autofocus>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthplace" class="col-md-3">{{ @app.user->provider->profile->getLabel('birthplace').', '.@app.user->provider->profile->getLabel('birthdate') }}</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" name="birthplace" value="{{ @app.user->provider->profile->birthplace }}" placeholder="{{ @app.user->provider->profile->getLabel('birtplace') | lower }}">
+                            </div>
+                            <div class="col-md-2">
+                                <div class='input-group use-datepicker'>
+                                    <input class="form-control" type="text" name="birthdate" value="{{ @app.user->provider->profile->birthdate }}" placeholder="{{ @app.user->provider->profile->getLabel('birthdate') | lower }}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender" class="col-md-3">{{ @app.user->provider->profile->getLabel('gender') }}</label>
+                            <div class="col-md-9">
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="Male" {{ @app.user->provider->profile->gender==='Male'?'checked':'' }}> Laki-laki
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="Female" {{ @app.user->provider->profile->gender==='Female'?'checked':'' }}> Perempuan
+                                </label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="username" class="col-md-3">Username</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" name="username" value="{{ @app.user->provider->data->username }}" placeholder="username" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_password" class="col-md-3">{{ @new_password }}</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="password" name="new_password" placeholder="{{ @leave_empty | lower }}">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="password" class="col-md-3">Password</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="password" name="password" placeholder="{{ @current_password | lower }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9 col-md-offset-3">
+                                <button type="submit" class="btn btn-primary btn-fill">{{ @save }}</button>
+                                <a href="{{ 'dashboard' | url }}" class="btn btn-default btn-fill">{{ @cancel }}</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<check if="{{ @error = Nutrition::flash('error') }}">
+    <div class="trigger-notif" data-type="{{ @error==='update_succed'?'success':'warning' }}" data-icon="attention">{{ $$error?:@error }}</div>
+</check>

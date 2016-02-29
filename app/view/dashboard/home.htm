@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ @welcome_to, @app.name | format }}</h4>
+                    <p class="category">{{ @app.description }}</p>
+                </div>
+
+                <div class="content">
+                    {{ ${Helper::greeting()} }}, {{ @app.user->provider->profile->fullname }}
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+<check if="{{ Nutrition::flash('welcome') }}">
+    <div class="trigger-notif" data-type="info" data-icon="gift">{{ @welcome_back, @app.user->provider->profile->fullname | format }}</div>
+</check>
