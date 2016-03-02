@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of eghojansu/Fatfree-bootstrap
+ *
+ * @author Eko Kurniawan <ekokurniawanbs@gmail.com>
+ */
+
 namespace controller;
 
 use DashboardController;
@@ -15,10 +21,12 @@ class RbacRoles extends DashboardController
     {
         $this->grantWhenHasPermission('read role');
         $model = new RolesRepository;
+        if ($keyword = $app->get('GET.keyword')) {
+            $model->addFilter('role_name like ?', '%'.$keyword.'%');
+        }
         $app->set('page', $model
             ->setTTL(0)
             ->orderBy('role_id, role_name')
-            ->addFilter(['role_name', $app->get('GET.keyword'), 'contain'])
             ->paginate($this->getPageNumber(), $this->getPageLimit()));
         $app->set('model', $model);
         $this->render('rbac/roles/home.htm');

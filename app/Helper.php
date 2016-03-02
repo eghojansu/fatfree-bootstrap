@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of eghojansu/Fatfree-bootstrap
+ *
+ * @author Eko Kurniawan <ekokurniawanbs@gmail.com>
+ */
+
 class Helper
 {
     public static function greeting()
@@ -13,5 +19,14 @@ class Helper
             return 'good_evening';
         else
             return 'good_night';
+    }
+
+    public static function dump($var, $halt = false)
+    {
+        echo '<pre>'.var_dump($var, true).'</pre>';
+
+        if ($halt) {
+            die;
+        }
     }
 }

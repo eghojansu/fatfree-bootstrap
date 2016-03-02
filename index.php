@@ -3,6 +3,7 @@
 require __DIR__.'/vendor/autoload.php';
 
 $config = [
+    'LANGUAGE' => Base::instance()->get('SESSION.lang'),
     'DEBUG' => 3,
     'ONERROR' => function($app) {
         while (ob_get_level()) {

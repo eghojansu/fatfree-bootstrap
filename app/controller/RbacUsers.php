@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of eghojansu/Fatfree-bootstrap
+ *
+ * @author Eko Kurniawan <ekokurniawanbs@gmail.com>
+ */
+
 namespace controller;
 
 use DashboardController;
@@ -18,11 +24,13 @@ class RbacUsers extends DashboardController
     {
         $this->grantWhenHasPermission('read user');
         $model = new ViewProfilesUsers;
+        if ($keyword = $app->get('GET.keyword')) {
+            $model->addFilter('username like ?', '%'.$keyword.'%');
+        }
         $app->set('page', $model
             ->setTTL(0)
             ->orderBy('user_id, username')
-            ->addFilter(['username', $app->get('GET.keyword'), 'contain'])
-            ->addFilter(['user_id', $this->user->provider->getID(), '<>'])
+            ->addFilter('user_id > 1 and user_id <> ?', $this->user->provider->getID())
             ->paginate($this->getPageNumber(), $this->getPageLimit()));
         $app->set('model', $model);
         $this->render('rbac/users/home.htm');

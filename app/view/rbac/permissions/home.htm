@@ -16,7 +16,7 @@
 
                             <form class="form-inline">
                                 <div class="form-group">
-                                    <input type="text" name="keyword" id="" value="{{ @GET.keyword }}" placeholder="permission name..." class="form-control">
+                                    <input type="text" name="keyword" id="" value="{{ @GET.keyword }}" placeholder="permission name..." class="highlight-keyword form-control" data-target="highlight-area">
                                 </div>
                                 <button type="submit" class="btn btn-default btn-fill"><i class="pe-7s-search"> {{ @search }}</i></button>
                             </form>
@@ -35,7 +35,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="highlight-area">
                             <set no="{{ Nutrition::paginationStartNumber(@page) }}" />
                             <repeat group="{{ @page.subset }}" value="{{ @item }}">
                                 <tr>

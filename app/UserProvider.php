@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of eghojansu/Fatfree-bootstrap
+ *
+ * @author Eko Kurniawan <ekokurniawanbs@gmail.com>
+ */
+
 use Nutrition\Security\UserProviderInterface;
 use Nutrition\Security\PasswordEncoderInterface;
 use model\Profiles;

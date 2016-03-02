@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of eghojansu/Fatfree-bootstrap
+ *
+ * @author Eko Kurniawan <ekokurniawanbs@gmail.com>
+ */
+
 namespace controller;
 
 use DashboardController;
@@ -12,9 +18,11 @@ class RbacPermissions extends DashboardController
     {
         $this->grantWhenHasPermission('read permission');
         $model = new PermissionsRepository;
+        if ($keyword = $app->get('GET.keyword')) {
+            $model->addFilter('permission_name like ?', '%'.$keyword.'%');
+        }
         $app->set('page', $model
             ->setTTL(0)
-            ->addFilter(['permission_name', $app->get('GET.keyword'), 'contain'])
             ->orderBy('permission_id, permission_name')
             ->paginate($this->getPageNumber(), $this->getPageLimit()));
         $app->set('model', $model);
