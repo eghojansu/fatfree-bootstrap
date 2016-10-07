@@ -1,0 +1,13 @@
+[data-ready="print"] {
+    display: none;
+}
+@page {
+    size: A4;
+    margin: 60px 50px;
+}
+@media print {
+    html, body {
+        width: 210mm;
+        height: 297mm;
+    }
+}

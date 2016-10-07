@@ -1,0 +1,10 @@
+{
+  "name": "fa-simple-php",
+  "repository": "https://github.com/eghojansu/fa-simple-php",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-sass": "^2.3.2"
+  }
+}

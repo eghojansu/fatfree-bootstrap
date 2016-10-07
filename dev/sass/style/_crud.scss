@@ -1,0 +1,24 @@
+.data-control {
+    margin-bottom: 30px;
+}
+
+.first-no {
+    td {
+        &:first-child {
+            width: 50px;
+        }
+    }
+}
+
+.last-control {
+    td {
+        &:last-child {
+            width: 100px;
+            text-align: center;
+
+            .btn {
+                min-width: 25px;
+            }
+        }
+    }
+}

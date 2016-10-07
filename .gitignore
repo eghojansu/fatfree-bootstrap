@@ -1,6 +1,6 @@
-runtime/*
-skip/*
-vendor/*
+vendor/
+var/
+dev/notes/
+node_modules/
 *.lock
-*.sublime-*
-!.htaccess
+*.bak

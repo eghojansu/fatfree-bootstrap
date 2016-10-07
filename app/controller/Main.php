@@ -1,25 +1,17 @@
 <?php
 
-/**
- * This file is part of eghojansu/Fatfree-bootstrap
- *
- * @author Eko Kurniawan <ekokurniawanbs@gmail.com>
- */
+namespace app\controller;
 
-namespace controller;
+use app\BaseController;
+use app\form\Login;
 
-use Controller;
-
-class Main extends Controller
+class Main extends BaseController
 {
-    public function home()
+    public function index($base)
     {
-        $this->render('landing.htm', true);
-    }
+        $form = new Login;
+        $base->set('form', $form);
 
-    public function language($app, $params)
-    {
-        $app->set('SESSION.lang', $params['lang']);
-        $this->goBack();
+        $this->noTemplate()->render('main.html');
     }
 }
