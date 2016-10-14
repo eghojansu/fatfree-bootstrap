@@ -13,7 +13,7 @@ RewriteEngine On
 #
 # RewriteBase /
 
-RewriteRule ^(app|dev|lib|vendor)\/$ - [R=404]
+RewriteRule ^(app|dev|var|vendor)\/$ - [R=404]
 
 RewriteCond %{REQUEST_FILENAME} !-l
 RewriteCond %{REQUEST_FILENAME} !-f

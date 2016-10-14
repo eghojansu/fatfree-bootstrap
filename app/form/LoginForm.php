@@ -2,17 +2,16 @@
 
 namespace app\form;
 
-use Nutrition\Form;
+use app\BaseForm;
 
-class Login extends Form
+class LoginForm extends BaseForm
 {
     protected $attrs = [
-        'class'=>'form-horizontal',
     ];
     protected $controlAttrs = [
         'class'=>'form-control',
+        'required',
     ];
     protected $labelAttrs = [
-        'class'=>'form-label col-sm-2',
     ];
 }

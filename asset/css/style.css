@@ -5,6 +5,13 @@ html {
   max-width: 740px;
   padding-top: 50px; }
 
+html {
+  font-family: "Trebuchet MS", Helvetica, sans-serif; }
+
+.container-error {
+  max-width: 740px;
+  padding-top: 50px; }
+
 .data-control {
   margin-bottom: 30px; }
 
@@ -16,6 +23,13 @@ html {
   text-align: center; }
   .last-control td:last-child .btn {
     min-width: 25px; }
+
+.table .btn.btn-xs {
+  margin-bottom: 3px; }
+
+.form-error {
+  color: #DF382C;
+  font-size: smaller; }
 
 .container-login {
   width: 300px;

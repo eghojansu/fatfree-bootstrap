@@ -1,5 +1,7 @@
 var gulp = require('gulp')
-var $ = require('gulp-load-plugins')()
+var $ = require('gulp-load-plugins')({
+    pattern: ['gulp-*', 'gulp.*']
+})
 var path = (function() {
     var p = {}
     var mf = function(base, suffix) {
@@ -27,10 +29,17 @@ var path = (function() {
         return mf(base, suffix)
     }
 
+    p.base = function(suffix) {
+        var base = '';
+
+        return mf(base, suffix)
+    }
+
     return p
 })()
 
 gulp.task('compile-sass', function() {
+    console.log('compiling sass...')
     gulp.src(path.sass('bootstrap.scss'))
         .pipe($.sass({outputStyle: 'compressed'}))
         .pipe(gulp.dest(path.dest('css')))
@@ -40,6 +49,7 @@ gulp.task('compile-sass', function() {
 })
 
 gulp.task('watch-changes', function() {
+    console.log('watching changes...')
     gulp.watch(path.sass('**/*.scss'), ['compile-sass'])
 })
 

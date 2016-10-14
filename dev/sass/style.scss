@@ -1,3 +1,8 @@
+// bootstrap variables and mixins
+@import "bootswatch/variables";
+@import "bootstrap/mixins";
+
+@import "style/main";
 @import "style/main";
 @import "style/crud";
 @import "style/login";

@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>This is a landing page</h1>
+    <check if="{{ @app.user->wasLogged() }}">
+        <true>
+            <a href="{{ 'homepage'|path }}">Homepage</a> | <a href="{{ 'profile'|path }}">Profile</a> | <a href="{{ 'logout'|path }}">Logout</a>
+        </true>
+        <false>
+            <a href="{{ 'login'|path }}">Login</a>
+        </false>
+    </check>
+  </div>
+</div>

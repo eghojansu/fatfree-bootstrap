@@ -1,6 +1,7 @@
 {
 	"name": "eghojansu/fatfree-bootstrap",
 	"description": "Fatfree framework and nutrition simple fast bootstrap, with some usefull helper and abstract classes",
+    "keywords": ["fatfree", "php", "validation", "form", "user", "framework", "eghojansu", "nutrition", "fatfree-bootstrap"],
 	"homepage": "https://github.com/eghojansu/fatfree-bootstrap",
 	"license": "MIT",
     "type": "project",
@@ -13,9 +14,11 @@
     ],
 	"require": {
 		"php": ">=5.4",
-        "eghojansu/nutrition": "3.0.0-beta"
+        "eghojansu/nutrition": "~3"
 	},
-    "require-dev": {
-        "symfony/finder": "^3.1"
-    }
+	"require-dev": {
+		"fzaninotto/faker": "^1.6",
+		"symfony/console": "^3.1",
+		"symfony/process": "^3.1"
+	}
 }

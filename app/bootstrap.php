@@ -1,15 +1,25 @@
 <?php
 
+use app\model\UserMap;
+use Nutrition\Url;
+use Nutrition\Helper;
+
 require __DIR__.'/../vendor/autoload.php';
 
 $base = Base::instance();
 $config = [
+    'LOCALES'=>'app/dict/',
     'LOGS'=>'var/logs/',
     'TEMP'=>'var/tmp/',
     'UPLOADS'=>'var/uploads/',
-    'CACHE'=>true,
-    'TZ'=>'Asia/Jakarta',
+    'CACHE'=>'var/cache/',
+    // 'CACHE'=>true,
     'UI'=>'app/view/',
+    'LANGUAGE'=>'id',
+    'TZ'=>'Asia/Jakarta',
+    'SECURITY'=>[
+        'provider'=>UserMap::class,
+    ],
 ];
 $base->mset($config);
 
@@ -23,10 +33,14 @@ $dsn = "mysql:host=$db[host];dbname=$db[name]";
 $base->set('DB.SQL', new DB\SQL($dsn, $db['user'], $db['password']));
 
 $template = Template::instance();
-$template->filter('path', function($path) use ($base) {
-    if (false === strpos($path, '/') && $p = $base->get('ALIASES.'.$path)) {
-        $path = $p;
-    }
-    return $base->get('BASE').'/'.$path;
-});
+$natives = [];
+foreach ($natives as $native) {
+    $template->filter($native, $native);
+}
+$template->filter('path', Url::class.'::instance()->path');
+$template->filter('reverseDate', Helper::class.'::reverseDate');
+$template->filter('title', function($title) use ($base) {
+    $default = $base->get('app.name');
 
+    return $title?$title.' ~ '.$default:$default;
+});

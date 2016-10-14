@@ -1,6 +1,6 @@
 {
-  "name": "fa-simple-php",
-  "repository": "https://github.com/eghojansu/fa-simple-php",
+  "name": "fatfree-bootstrap",
+  "repository": "https://github.com/eghojansu/fatfree-bootstrap",
   "license": "MIT",
   "devDependencies": {
     "gulp": "^3.9.1",
