@@ -21,7 +21,7 @@ class DefaultController extends BaseController
 
         $form = new LoginForm;
 
-        if ($this->isSubmitted() && $form->validation->validate()) {
+        if ($form->isSubmitted() && $form->validation->validate()) {
             if ($this->user->authenticate($form->get('username'), $form->get('password'))) {
                 $this->flash('info', 'Welcome back '.$form->get('username'));
 
