@@ -2,6 +2,7 @@
 
 namespace app\command;
 
+use Base;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -40,5 +41,10 @@ abstract class AbstractCommand extends Command
     protected function done()
     {
         $this->output->writeln('<fg=green>done</>');
+    }
+
+    protected function base()
+    {
+        return Base::instance();
     }
 }

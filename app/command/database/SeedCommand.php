@@ -2,18 +2,17 @@
 
 namespace app\command\database;
 
-use Base;
 use Nutrition\SQLMapper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use app\command\AbstractCommand;
 
-class SeedDatabaseCommand extends AbstractCommand
+class SeedCommand extends AbstractCommand
 {
-    protected $tables;
-    protected $skipped;
-    protected $records;
+    protected $tables = 0;
+    protected $skipped = 0;
+    protected $records = 0;
 
     public function configure()
     {
@@ -27,7 +26,7 @@ class SeedDatabaseCommand extends AbstractCommand
     {
         $this->configureIO($input, $output);
 
-        $this->reallyDone('Database seeding complete');
+        $this->reallyDone("Database seeding complete (Records: {$this->records} Tables/Skipped : {$this->tables}/{$this->skipped})");
     }
 
     protected function seed($table, $execute = true, $callback = null)

@@ -20,6 +20,8 @@ $config = [
     'SECURITY'=>[
         'provider'=>UserMap::class,
     ],
+    'APPDIR'=>$base->fixslashes(__DIR__).'/',
+    'ROOTDIR'=>$base->fixslashes(dirname(__DIR__)).'/',
 ];
 $base->mset($config);
 
