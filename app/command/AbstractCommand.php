@@ -30,7 +30,7 @@ abstract class AbstractCommand extends Command
 
     protected function info($info)
     {
-        $this->output->write("<fg=yellow>$info ...</>");
+        $this->output->write("<fg=yellow>{$info}...</>");
     }
 
     protected function error($error)

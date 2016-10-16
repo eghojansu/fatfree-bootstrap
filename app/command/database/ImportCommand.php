@@ -32,7 +32,9 @@ class ImportCommand extends AbstractCommand
         $sqlTool = new SQLTool($this->base()->get('DB.SQL'));
 
         foreach ($this->schemas as $schema) {
+            $this->info("Importing '$schema'");
             $sqlTool->import($this->dir.$schema);
+            $this->done();
         }
 
         $this->reallyDone('Imports complete ('.count($this->schemas).' schema(s) imported)');

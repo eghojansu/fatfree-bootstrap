@@ -26,7 +26,7 @@ class SeedCommand extends AbstractCommand
     {
         $this->configureIO($input, $output);
 
-        $this->reallyDone("Database seeding complete (Records: {$this->records} Tables/Skipped : {$this->tables}/{$this->skipped})");
+        $this->reallyDone("Database seeding complete (Records: {$this->records}, Tables/Skipped : {$this->tables}/{$this->skipped})");
     }
 
     protected function seed($table, $execute = true, $callback = null)
@@ -41,7 +41,7 @@ class SeedCommand extends AbstractCommand
 
         $resources = [];
         foreach ($tables as $table) {
-            $resources[] = (false === strpos($table, '\\'))?new $table:new SQLMapper($table);
+            $resources[] = (false === strpos($table, '\\'))?new SQLMapper($table):new $table;
         }
         $this->tables += count($tables);
         $this->records += (int) call_user_func_array($callback, $resources);

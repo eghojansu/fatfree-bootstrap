@@ -25,12 +25,13 @@ class ClearCommand extends AbstractCommand
         $this->configureIO($input, $output);
 
         $db = $this->base()->get('DB.SQL');
+        $affected = 0;
         foreach ($this->tables as $table) {
-            $table = $db->quote($table);
-            $sql = "DELETE FROM $table WHERE 1; ALTER TABLE $table AUTO_INCREMENT = 1";
-            $db->pdo()->exec($sql);
+            $table = $db->quotekey($table);
+            $sql = "DELETE FROM $table";
+            $affected += $db->exec($sql);
         }
 
-        $this->reallyDone('Database content cleared ('.count($this->schemas).' table(s) cleared)');
+        $this->reallyDone('Database content cleared ('.count($this->tables).' table(s) cleared, '.$affected.' record(s) affected)');
     }
 }
