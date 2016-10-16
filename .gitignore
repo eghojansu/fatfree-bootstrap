@@ -1,8 +1,8 @@
-dev/notes/
-node_modules/
-dist/
-vendor/
-var/
+/dev/notes/
+/node_modules/
+/dist/
+/vendor/
+/var/
 *.lock
 *.bak
 *.dev
