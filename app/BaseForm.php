@@ -6,10 +6,15 @@ use Nutrition\HTML\Form;
 
 class BaseForm extends Form
 {
-    protected function onOpen()
-    {
-        return $this->hidden('submitted', ['value'=>'1'], true);
-    }
+    protected $attrs = [
+        'class'=>'form-horizontal',
+    ];
+    protected $controlAttrs = [
+        'class'=>'form-control',
+    ];
+    protected $labelAttrs = [
+        'class'=>'form-label col-sm-2',
+    ];
 
     public function error($field)
     {

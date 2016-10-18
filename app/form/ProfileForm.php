@@ -6,16 +6,6 @@ use app\BaseForm;
 
 class ProfileForm extends BaseForm
 {
-    protected $attrs = [
-        'class'=>'form-horizontal',
-    ];
-    protected $controlAttrs = [
-        'class'=>'form-control',
-    ];
-    protected $labelAttrs = [
-        'class'=>'form-label col-sm-2',
-    ];
-
     protected function init()
     {
         parent::init();
