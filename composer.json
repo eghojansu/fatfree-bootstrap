@@ -1,7 +1,7 @@
 {
 	"name": "eghojansu/fatfree-bootstrap",
 	"description": "Fatfree framework and nutrition simple fast bootstrap, with some usefull helper and abstract classes",
-    "keywords": ["fatfree", "php", "validation", "form", "user", "framework", "eghojansu", "nutrition", "fatfree-bootstrap"],
+    "keywords": ["fatfree", "php", "validation", "form", "user", "framework", "nutrition", "fatfree-bootstrap"],
 	"homepage": "https://github.com/eghojansu/fatfree-bootstrap",
 	"license": "MIT",
     "type": "project",
