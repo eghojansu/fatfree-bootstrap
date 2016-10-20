@@ -12,7 +12,7 @@ $config = [
     'LOGS'=>'var/logs/',
     'TEMP'=>'var/tmp/',
     'UPLOADS'=>'var/uploads/',
-    'CACHE'=>'var/cache/',
+    'CACHE'=>'folder=var/cache/',
     // 'CACHE'=>true,
     'UI'=>'app/view/',
     'LANGUAGE'=>'id',
