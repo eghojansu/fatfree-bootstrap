@@ -1,56 +1,73 @@
 var gulp = require('gulp')
+var browserSync = require('browser-sync').create()
 var $ = require('gulp-load-plugins')({
-    pattern: ['gulp-*', 'gulp.*']
+    pattern: ['gulp-*', 'gulp.*', 'main-bower-files', 'stream-series']
 })
-var path = (function() {
-    var p = {}
-    var mf = function(base, suffix) {
-        if (suffix && Array.isArray(suffix)) {
-            var sources = []
-            for (var i = suffix.length - 1; i >= 0; i--) {
-                sources.push(base + suffix[i])
-            }
-
-            return sources
-        }
-
-        return base + (suffix || '')
+var assetInjector = function(filepath) {
+    if (filepath.slice(-4) === '.css') {
+        return '<link rel="stylesheet" href="{{ \''+filepath.substr(1)+'\'|path }}">'
     }
-
-    p.sass = function(suffix) {
-        var base = 'dev/sass/'
-
-        return mf(base, suffix)
+    if (filepath.slice(-3) === '.js') {
+        return '<script src="{{ \''+filepath.substr(1)+'\'|path }}"></script>'
     }
+    // Use the default transform as fallback:
+    return $.inject.transform.apply($.inject.transform, arguments);
+}
 
-    p.dest = function(suffix) {
-        var base = 'asset/'
+/* configuration ----------------------------------------------------------- */
+var browserSyncProxy = 'http://localhost/www/fa/fatfree-bootstrap'
 
-        return mf(base, suffix)
-    }
+/* tasks ------------------------------------------------------------------- */
 
-    p.base = function(suffix) {
-        var base = '';
+gulp.task('inject-asset', function() {
+    console.log('injecting asset...')
+    var vendorStyleStream = gulp.src($.mainBowerFiles('**/*.css'))
+        .pipe($.concat('vendor.css'))
+        .pipe(gulp.dest('asset/css'))
+    var vendorScriptStream = gulp.src($.mainBowerFiles('**/*.js'))
+        .pipe($.concat('vendor.js'))
+        .pipe(gulp.dest('asset/js'))
+    var appStream = gulp.src([
+        'asset/js/*.js',
+        'asset/css/*.css',
+        '!asset/**/vendor.{css,js}',
+        ], {read: false})
 
-        return mf(base, suffix)
-    }
+    gulp.src('app/view/layout/*.html')
+        .pipe($.inject($.streamSeries(vendorScriptStream, vendorStyleStream), {name:'bower', transform: assetInjector}))
+        .pipe($.inject($.streamSeries(appStream), {transform: assetInjector}))
+        .pipe(gulp.dest('app/view/layout'))
+})
 
-    return p
-})()
+gulp.task('copy-fonts', function() {
+    console.log('copying fonts...')
+    gulp.src('bower_components/**/*.{eot,svg,ttf,woff,woff2}')
+        .pipe($.flatten())
+        .pipe(gulp.dest('asset/fonts'))
+})
 
-gulp.task('compile-sass', function() {
+gulp.task('compile-sass', ['copy-fonts'], function() {
     console.log('compiling sass...')
-    gulp.src(path.sass('bootstrap.scss'))
+    gulp.src('dev/sass/bootstrap.scss')
         .pipe($.sass({outputStyle: 'compressed'}))
-        .pipe(gulp.dest(path.dest('css')))
-    gulp.src(path.sass('style.scss'))
+        .pipe(gulp.dest('asset/css'))
+
+    gulp.src('dev/sass/style.scss')
         .pipe($.sass({outputStyle: 'nested'}))
-        .pipe(gulp.dest(path.dest('css')))
+        .pipe(gulp.dest('asset/css'))
 })
 
 gulp.task('watch-changes', function() {
     console.log('watching changes...')
-    gulp.watch(path.sass('**/*.scss'), ['compile-sass'])
+    browserSync.init({
+        proxy: browserSyncProxy,
+        browser: ["chrome"],
+        ghostMode: false,
+        notify: false
+    })
+    gulp.watch('dev/sass/**/*.scss', ['compile-sass'])
+    gulp.watch('bower.json', ['inject-asset'])
+    gulp.watch('app/view/**/*.html').on('change', browserSync.reload)
 })
 
-gulp.task('default', ['compile-sass', 'watch-changes'])
+gulp.task('default', ['compile-sass', 'inject-asset', 'watch-changes'])

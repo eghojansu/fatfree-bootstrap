@@ -7,12 +7,27 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 abstract class AbstractCommand extends Command
 {
     protected $io;
     protected $input;
     protected $output;
+
+    protected function process($command, $cwd)
+    {
+        $process = new Process($command, $cwd);
+        $process->run();
+
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        return $process;
+    }
 
     protected function configureIO(InputInterface $input, OutputInterface $output)
     {

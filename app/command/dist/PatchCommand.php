@@ -8,13 +8,15 @@ use RecursiveIteratorIterator;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use ZipArchive;
 use app\command\AbstractCommand;
 
-class BuildCommand extends AbstractCommand
+class PatchCommand extends AbstractCommand
 {
+    protected $zipname;
     protected $distDir;
     protected $tempDir;
     protected $baseDir;
@@ -23,13 +25,15 @@ class BuildCommand extends AbstractCommand
     {
         $this->baseDir = $this->base()->get('ROOTDIR');
         $this->distDir = $this->baseDir.'dist/';
-        $this->tempDir = $this->baseDir.'dist/tmp/';
+        $this->tempDir = $this->baseDir.'dist/patch/';
         $this->zipname = basename($this->baseDir);
 
         $this
-            ->setName('dist:build')
-            ->setDescription('Build distributable')
-            ->addArgument('vtag', InputArgument::OPTIONAL, 'Version tag', 'unstable')
+            ->setName('dist:patch')
+            ->setDescription('Build distributable patch')
+            ->addArgument('stag', InputArgument::REQUIRED, 'Start version tag')
+            ->addArgument('etag', InputArgument::REQUIRED, 'End version tag')
+            ->addOption('no-vendor', null, InputOption::VALUE_NONE, 'Do not install vendor')
         ;
     }
 
@@ -42,7 +46,7 @@ class BuildCommand extends AbstractCommand
             ->deployInstallVendor()
             ->deployPrepareCompress()
             ->deployCompress()
-            ->reallyDone('Building dist package complete')
+            ->reallyDone('Building dist patch package complete')
         ;
     }
 
@@ -50,7 +54,8 @@ class BuildCommand extends AbstractCommand
     {
         $this->info('compressing script');
 
-        $saveAs = $this->zipname.'-'.$this->input->getArgument('vtag').'.zip';
+        $tagToTag = $this->input->getArgument('stag').'-to-'.$this->input->getArgument('etag');
+        $saveAs = $this->zipname.'-patch-'.$tagToTag.'.zip';
         $path = $this->distDir.$saveAs;
         if (file_exists($path)) {
             unlink($path);
@@ -128,6 +133,7 @@ class BuildCommand extends AbstractCommand
             $this->tempDir.'composer.lock',
             $this->tempDir.'app/console',
             $this->tempDir.'app/command',
+            $this->tempDir.'dev',
         ];
         foreach ($removes as $path) {
             if (!file_exists($path)) {
@@ -150,17 +156,21 @@ class BuildCommand extends AbstractCommand
     {
         $this->info('installing vendor');
 
-        $command = [
-            'composer',
-            'install',
-            '--no-dev',
-            '--quiet ',
-            '--optimize-autoloader',
-            '--no-suggest',
-        ];
-        $this->process(implode(' ', $command), $this->tempDir);
+        if (file_exists($this->tempDir.'composer.json') && !$this->input->getOption('no-vendor')) {
+            $command = [
+                'composer',
+                'install',
+                '--no-dev',
+                '--quiet ',
+                '--optimize-autoloader',
+                '--no-suggest',
+            ];
+            $this->process(implode(' ', $command), $this->tempDir);
 
-        $this->done();
+            $this->done();
+        } else {
+            $this->error('skipped');
+        }
 
         return $this;
     }
@@ -169,19 +179,20 @@ class BuildCommand extends AbstractCommand
     {
         $this->info('copying script');
 
-        $sources = [
-            $this->baseDir.'app',
-            $this->baseDir.'asset',
-            $this->baseDir.'.htaccess',
-            $this->baseDir.'app.php',
-            $this->baseDir.'composer.json',
-            $this->baseDir.'favicon.ico',
-            $this->baseDir.'LICENSE',
-            $this->baseDir.'README.md',
+        $tag = $this->input->getArgument('stag').'..'.$this->input->getArgument('etag');
+        $command = [
+            'git',
+            'diff',
+            '--name-only',
+            '--diff-filter=duxb',
+            $tag,
         ];
 
+        $process = $this->process(implode(' ', $command), $this->tempDir);
+        $sources = array_filter(explode("\n", str_replace(["\n","\r"], "\n", $process->getOutput())));
+
         foreach ($sources as $source) {
-            Helper::copyDir($source, $this->tempDir.basename($source));
+            Helper::copyDir($this->baseDir.$source, $this->tempDir.$source);
         }
 
         $this->done();
@@ -191,7 +202,7 @@ class BuildCommand extends AbstractCommand
 
     protected function deployInitialize()
     {
-        $this->output->writeln("<fg=yellow>building dist package...</> <fg=cyan>(please wait until process complete)</>\n");
+        $this->output->writeln("<fg=yellow>building dist patch package...</> <fg=cyan>(please wait until process complete)</>\n");
 
         $this->info('initializing');
 

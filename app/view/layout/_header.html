@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ @app.pageTitle|title }}</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.ico'|path }}">
-    <link rel="stylesheet" type="text/css" href="{{ 'asset/css/font-awesome.min.css'|path }}">
-    <link rel="stylesheet" type="text/css" href="{{ 'asset/css/bootstrap.css'|path }}">
-    <link rel="stylesheet" type="text/css" href="{{ 'asset/css/bootstrap-datepicker3.min.css'|path }}">
-    <link rel="stylesheet" type="text/css" href="{{ 'asset/css/daterangepicker.css'|path }}">
-    <link rel="stylesheet" type="text/css" href="{{ 'asset/css/style.css'|path }}">
-    <script src="{{ 'asset/js/moment.min.js'|path }}"></script>
-    <script src="{{ 'asset/js/jquery.min.js'|path }}"></script>
-    <script src="{{ 'asset/js/bootstrap.min.js'|path }}"></script>
-    <script src="{{ 'asset/js/bootstrap-datepicker.min.js'|path }}"></script>
-    <script src="{{ 'asset/js/bootstrap-datepicker.id.min.js'|path }}"></script>
-    <script src="{{ 'asset/js/daterangepicker.js'|path }}"></script>
-    <script src="{{ 'asset/js/notify.min.js'|path }}"></script>
-    <script src="{{ 'asset/js/bootbox.min.js'|path }}"></script>
-    <script src="{{ 'asset/js/autonumeric.js'|path }}"></script>
+    <!-- bower:css -->
+    <link rel="stylesheet" href="{{ 'asset/css/vendor.css'|path }}">
+    <!-- endinject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{{ 'asset/css/bootstrap.css'|path }}">
+    <link rel="stylesheet" href="{{ 'asset/css/style.css'|path }}">
+    <!-- endinject -->
+    <!-- bower:js -->
+    <script src="{{ 'asset/js/vendor.js'|path }}"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
     <script src="{{ 'asset/js/script.js'|path }}"></script>
+    <!-- endinject -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
