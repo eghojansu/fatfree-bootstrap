@@ -52,7 +52,7 @@ abstract class Controller
     public function beforeroute(Base $app, array $params)
     {
         if (
-            'maintenance' !== $app['ALIAS']
+            !in_array($app['ALIAS'], ['maintenance','auth_login'])
             && $this->config->isMaintenance()
             && !$this->access->isGranted('ROLE_SUPER_ADMIN')
         ) {

@@ -19,6 +19,6 @@
     },
 	"require": {
         "php": ">=5.6",
-		"eghojansu/nutrition": "dev-master"
+		"eghojansu/nutrition": "^4.0"
 	}
 }

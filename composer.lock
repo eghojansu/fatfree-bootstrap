@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a152388f7e0d1f5258012548c6ff5f0",
+    "content-hash": "cc029d1ebb49f55bde06b207f658bddf",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -39,7 +39,7 @@
         },
         {
             "name": "eghojansu/nutrition",
-            "version": "dev-master",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eghojansu/nutrition.git",
@@ -92,9 +92,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "eghojansu/nutrition": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
