@@ -1,0 +1,17 @@
+--
+-- @desc Drop tables
+--
+
+SET FOREIGN_KEY_CHECKS=0;
+
+DROP TABLE IF EXISTS setting;
+
+DROP TABLE IF EXISTS post;
+
+DROP TABLE IF EXISTS user;
+
+DROP TABLE IF EXISTS user_log;
+
+DROP TABLE IF EXISTS task;
+
+SET FOREIGN_KEY_CHECKS=1;

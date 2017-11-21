@@ -1,0 +1,13 @@
+<repeat group="{{ flash_all() }}" key="{{ @type }}" value="{{ @messages }}">
+  <check if="{{ array_filter(@messages) }}">
+    <div class="alert alert-{{ @type }} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <p><strong>{{ title_case(@type) }}!</strong></p>
+      <repeat group="{{ @messages }}" value="{{ @message }}">
+        {{ @message }}
+      </repeat>
+    </div>
+  </check>
+</repeat>

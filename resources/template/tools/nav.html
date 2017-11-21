@@ -1,0 +1,25 @@
+<check if="{{ isset(@nav) }}">
+  <ul class="{{ isset(@navClass) ? @navClass : '' }}">
+    <repeat group="{{ menu_get(@nav) }}" value="{{ @item }}">
+      <check if="{{ empty(@item.items) }}">
+        <true>
+          <li class="{{ decide(menu_active(@item.route), 'active') }}">
+            <a href="{{ route(@item.route, empty(@item.args) ? [] : @item.args) }}">{{ @item.label }}</a>
+          </li>
+        </true>
+        <false>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ @item.label }} <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <repeat group="{{ @item.items }}" value="{{ @childItem }}">
+                <li class="{{ decide(menu_active(@childItem.route), 'active') }}">
+                  <a href="{{ route(@childItem.route, empty(@childItem.args) ? [] : @childItem.args) }}">{{ @childItem.label }}</a>
+                </li>
+              </repeat>
+            </ul>
+          </li>
+        </false>
+      </check>
+    </repeat>
+  </ul>
+</check>

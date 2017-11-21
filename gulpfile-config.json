@@ -1,0 +1,54 @@
+{
+    "scripts": {
+        "src": [
+            "resources/js/**/*.js"
+        ]
+    },
+    "styles": {
+        "src": [
+            "resources/scss/**/*.scss"
+        ]
+    },
+    "resources": {
+        "compiled": "resources",
+        "src": [
+            "resources/images/**/*"
+        ]
+    },
+    "vendor_scripts": {
+        "compiled": "vendor.js",
+        "src": [
+            "node_modules/jquery/dist/jquery.js",
+            "node_modules/bootstrap-sass/assets/javascripts/bootstrap.js",
+            "node_modules/moment/moment.js",
+            "node_modules/moment/locale/id.js",
+            "node_modules/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js",
+            "node_modules/summernote/dist/summernote.js",
+            "node_modules/chart.js/dist/Chart.js",
+            "node_modules/jquery-form/src/jquery.form.js"
+        ]
+    },
+    "vendor_styles": {
+        "compiled": "vendor.css",
+        "src": [
+            "node_modules/summernote/dist/summernote.css"
+        ]
+    },
+    "vendor_resources": {
+        "compiled": "resources",
+        "src": [
+            "node_modules/bootstrap-sass/assets/fonts/bootstrap/*.{ttf,woff,woff2,eot,svg}",
+            "node_modules/summernote/dist/font/*.{ttf,woff,woff2,eot,svg}"
+        ]
+    },
+    "watch_reload": [
+        "config/**/*",
+        "resources/template/**/*",
+        "src/**/*",
+        "dev/index.php"
+    ],
+    "assets_dir": {
+        "dev": "dev/assets",
+        "prod": "public/assets"
+    }
+}

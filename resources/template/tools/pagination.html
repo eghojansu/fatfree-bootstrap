@@ -1,0 +1,66 @@
+<div class="row crud-pagination">
+  <div class="col-sm-6">
+    <p>Displaying {{ @pagination->first }} - {{ @pagination->last }} of {{ @pagination->allRecordCount }} record(s)</p>
+  </div>
+  <div class="col-sm-6 text-right">
+    <check if="{{ @pagination->hasContent }}">
+      <nav aria-label="Data page navigation">
+        <ul class="pagination pagination-sm">
+          <li class="{{ @pagination->onFirstPage ? 'disabled' : '' }}">
+            <a href="{{ @pagination->path(@pagination->onFirstPage, 1) }}">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">First</span>
+            </a>
+          </li>
+
+          <li class="{{ @pagination->onFirstPage ? 'disabled' : '' }}">
+            <a href="{{ @pagination->path(@pagination->onFirstPage, @pagination->prevPage) }}">
+              <span aria-hidden="true">&lsaquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+
+          <check if="{{ @pagination->prevGap }}">
+            <li class="disabled">
+              <a style="cursor:default" href="#">
+                <span aria-hidden="true">&hellip;</span>
+                <span class="sr-only">page separator</span>
+              </a>
+            </li>
+          </check>
+
+          <repeat group="{{ @pagination->getRange() }}" value="{{ @i }}">
+            <li class="{{ @pagination->currentPage == @i ? 'active' : '' }}">
+                <a href="{{ @pagination->path(false, @i) }}">
+                  {{ @i }} <span class="sr-only">(current)</span>
+                </a>
+            </li>
+          </repeat>
+
+          <check if="{{ @pagination->nextGap }}">
+            <li class="disabled">
+              <a style="cursor:default" href="#">
+                <span aria-hidden="true">&hellip;</span>
+                <span class="sr-only">page separator</span>
+              </a>
+            </li>
+          </check>
+
+          <li class="{{ @pagination->onLastPage ? 'disabled' : '' }}">
+            <a href="{{ @pagination->path(@pagination->onLastPage, @pagination->nextPage) }}">
+              <span aria-hidden="true">&rsaquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+
+          <li class="{{ @pagination->onLastPage ? 'disabled' : '' }}">
+            <a href="{{ @pagination->path(@pagination->onLastPage, @pagination->lastPage) }}">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Last</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </check>
+  </div>
+</div>

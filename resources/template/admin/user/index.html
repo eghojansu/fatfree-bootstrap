@@ -1,0 +1,56 @@
+<h3 class="page-header">Data User</h3>
+
+<div class="row crud-control-container">
+  <div class="col-xs-8">
+    <include href="tools/form_search.html" />
+  </div>
+  <div class="col-xs-4">
+    <div class="btn-grup crud-control pull-right">
+      <a href="{{ route('user_create') }}" class="btn btn-primary">Data Baru</a>
+    </div>
+  </div>
+</div>
+
+<include href="tools/alert.html" />
+
+<set colspan="7" />
+<table class="table table-bordered table-hover table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Nama</th>
+      <th>Blok</th>
+      <th>Expired</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <repeat group="{{ @pagination->subset }}" value="{{ @item }}">
+      <tr>
+        <td>{{ @pagination->index() }}</td>
+        <td>{{ @item.username }}</td>
+        <td>{{ @item.email }}</td>
+        <td>{{ @item.nama }}</td>
+        <td>{{ on_off(@item.blocked) }}</td>
+        <td>{{ yes_no(@item.expired) }}</td>
+        <td>
+          <a href="{{ route('user_update', ['user'=>@item.id]) }}" class="btn btn-xs btn-warning">
+            Edit
+          </a>
+          <a href="{{ route('user_delete', ['user'=>@item.id]) }}" class="btn btn-xs btn-danger">
+            Delete
+          </a>
+        </td>
+      </tr>
+    </repeat>
+    <check if="{{ @pagination->isEmpty() }}">
+      <tr>
+        <td colspan="{{ @colspan }}"><em>Data tidak ditemukan</em></td>
+      </tr>
+    </check>
+  </tbody>
+</table>
+
+<include href="tools/pagination.html" />

@@ -1,9 +1,8 @@
-/dev/notes/
-/bower_components/
-/node_modules/
-/dist/
 /vendor/
 /var/
-*.lock
-*.bak
-*.dev
+/node_modules/
+/dev/assets/
+/public/assets/
+.env
+*.sublime-*
+!.htaccess

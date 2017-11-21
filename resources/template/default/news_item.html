@@ -1,0 +1,17 @@
+<expr expr="{{ setup_prefix('title', @item.title) }}" />
+<expr expr="{{ menu_set('news') }}" />
+<expr expr="{{ breadcrumb_add('news')->addCurrentRoute() }}" />
+
+<check if="{{ @item }}">
+  <true>
+    <h3 class="page-header">{{ @item.title }}</h3>
+    <hr>
+    {{ raw(@item.konten) }}
+    <br>
+    <a href="{{ route('news_item', ['slug'=>@item.slug]) }}">{{ @item.title }}</a>
+    <hr>
+  </true>
+  <false>
+    <em>Tidak ada berita</em>
+  </false>
+</check>

@@ -1,0 +1,45 @@
+<expr expr="{{ setup_prefix('title', 'Delete') }}" />
+<expr expr="{{ breadcrumb_current('Delete') }}" />
+<expr expr="{{ menu_set('user') }}" />
+
+<h3 class="page-header">Hapus User</h3>
+
+<include href="tools/alert_delete.html" />
+
+<table class="table table-bordered table-detail">
+  <tbody>
+    <tr>
+      <td>Username</td>
+      <td>{{ @user.username }}</td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td>{{ @user.email }}</td>
+    </tr>
+    <tr>
+      <td>Nama</td>
+      <td>{{ @user.nama }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+<form method="POST" class="form-horizontal">
+  <div class="form-group {{ decide(@violations.confirm, 'has-error') }}"">
+    <label class="control-label required col-md-2" for="inputConfirm"></label>
+    <div class="col-md-3">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="inputConfirm" name="confirm" value="true" required> Konfirmasi hapus data
+        </label>
+      </div>
+      <check if="{{ @violations.confirm }}"><span class="help-block">{{ implode('<br>', @violations.confirm) }}</span></check>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-10 col-md-offset-2">
+      <button type="submit" class="btn btn-danger">Konfirmasi</button>
+      <a href="{{ route('user') }}" class="btn btn-default">Batal</a>
+    </div>
+  </div>
+</form>

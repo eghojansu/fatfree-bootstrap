@@ -1,0 +1,27 @@
+<set modeAll="{{ @report->getAllMode() }}" />
+<set modeAllStr="{{ implode('|', @modeAll) }}" />
+<set modePeriod="periods" />
+
+<div class="form-group">
+  <label for="inputReport" class="col-xs-3">Laporan</label>
+  <div class="col-xs-4">
+    <select name="{{ @report->getModeKey() }}" id="inputReport" class="form-control" data-filter-trigger='{"#inputPeriode":"{{ @modeAllStr }}","#inputPeriode2":"{{ @modePeriod }}"}' data-filter-dtp="#inputPeriode|#inputPeriode2">
+      <option value="">Tampilkan semua</option>
+      <repeat group="{{ @modeAll }}" value="{{ @item }}" key="{{ @label }}">
+        <option value="{{ @item }}" {{ @report->isMode(@item) ? 'selected' : '' }}>{{ @label }}</option>
+      </repeat>
+    </select>
+  </div>
+</div>
+<div class="form-group" data-filter-dependency='{"#inputReport":"{{ @modeAllStr }}"}'>
+  <label for="inputPeriode" class="col-xs-3">Periode</label>
+  <div class="col-xs-4">
+    <input type="text" class="form-control" id="inputPeriode" value="{{ @report->getDateA(true) }}" name="{{ @report->getDateAKey() }}" placeholder="Periode">
+  </div>
+</div>
+<div class="form-group" data-filter-dependency='{"#inputReport":"{{ @modePeriod }}"}'>
+  <label for="inputPeriode2" class="col-xs-3">s/d</label>
+  <div class="col-xs-4">
+    <input type="text" class="form-control" id="inputPeriode2" value="{{ @report->getDateB(true) }}" name="{{ @report->getDateBKey() }}" placeholder="Periode">
+  </div>
+</div>

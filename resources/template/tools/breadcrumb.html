@@ -1,0 +1,18 @@
+<check if="{{ breadcrumb_empty(false) }}">
+  <div class="breadcrumb-container">
+    <ol class="breadcrumb">
+      <li class="header">Anda disini &rsaquo;</li>
+
+      <repeat group="{{ breadcrumb_content() }}" value="{{ @item }}" key="{{ @key }}">
+        <check if="{{ breadcrumb_last(@key) }}">
+          <true>
+            <li class="active">{{ @item.label }}</li>
+          </true>
+          <false>
+            <li><a href="{{ starts_with('#', @item.route) ? @item.route : route(@item.route, @item.args) }}">{{ @item.label }}</a></li>
+          </false>
+        </check>
+      </repeat>
+    </ol>
+  </div>
+</check>

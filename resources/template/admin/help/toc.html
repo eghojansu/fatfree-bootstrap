@@ -1,0 +1,30 @@
+<set contents="{{ menu_get('help') }}" />
+<set cReq="{{ @GET.show }}" />
+<set cId="{{ @cReq ? (in_array(@cReq, @contents) ? @cReq : 'not_found') : 'index' }}" />
+<set cFile="{{ 'admin/help/content/' . @cId . '.html' }}" />
+<set title="{{ array_search(@cId, @contents) }}" />
+<expr expr="{{ breadcrumb_add('help', null, 'Bantuan') }}" />
+<expr expr="{{ setup_prefix('title', 'Bantuan') }}" />
+<check if="{{ @cId != 'index' }}">
+  <expr expr="{{ breadcrumb_add('help', null, @title) }}" />
+  <expr expr="{{ setup_prefix('title', @title) }}" />
+</check>
+
+<div class="row">
+  <div class="col-md-3 col-md-push-9">
+    <div class="help-content">
+      <span class="help-header">Navigation &raquo;</span>
+      <ul class="help-list">
+        <repeat group="{{ @contents }}" value="{{ @item }}" key="{{ @label }}">
+          <li class="{{ @item == @cId ? 'active' : '' }}"><a href="{{ route(@ALIAS, null, ['show'=>@item]) }}">{{ @label }}</a></li>
+        </repeat>
+      </ul>
+      <hr class="visible-xs">
+    </div>
+  </div>
+  <div class="col-md-9 col-md-pull-3">
+    <h3 class="page-header">Bantuan</h3>
+
+    <include href="{{ @cFile }}" />
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<expr expr="{{ setup_prefix('title', 'News') }}" />
+<expr expr="{{ breadcrumb_current() }}" />
+
+<check if="{{ @news }}">
+  <true>
+    <repeat group="{{ @news }}" value="{{ @item }}">
+      <h3 class="page-header">{{ @item.title }}</h3>
+      <hr>
+      {{ @item.konten|raw }}
+      <br>
+      <a href="{{ route('news_item', ['slug'=>@item.slug]) }}">{{ @item.title }}</a>
+      <hr>
+    </repeat>
+  </true>
+  <false>
+    <em>Tidak ada berita</em>
+  </false>
+</check>

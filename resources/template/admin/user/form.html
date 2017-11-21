@@ -1,0 +1,72 @@
+<expr expr="{{ setup_prefix('title', @title) }}" />
+<expr expr="{{ breadcrumb_current(@title) }}" />
+<expr expr="{{ menu_set('user') }}" />
+
+<h3 class="page-header">Form User</h3>
+
+<include href="tools/alert.html" />
+
+<form method="POST" class="form-horizontal">
+  <div class="form-group {{ decide(@violations.nama, 'has-error') }}">
+    <label class="control-label required col-md-2" for="inputName">Nama</label>
+    <div class="col-md-4">
+      <input type="text" class="form-control" id="inputName" name="nama" value="{{ post_value('nama', @user.nama) }}" required>
+      <check if="{{ @violations.nama }}"><span class="help-block">{{ implode('<br>', @violations.nama) }}</span></check>
+    </div>
+  </div>
+  <div class="form-group {{ decide(@violations.username, 'has-error') }}"">
+    <label class="control-label required col-md-2" for="inputUsername">Username</label>
+    <div class="col-md-3">
+      <input type="text" class="form-control" id="inputUsername" name="username" value="{{ post_value('username', @user.username) }}" required>
+      <check if="{{ @violations.username }}"><span class="help-block">{{ implode('<br>', @violations.username) }}</span></check>
+    </div>
+  </div>
+  <div class="form-group {{ decide(@violations.email, 'has-error') }}"">
+    <label class="control-label required col-md-2" for="inputUsername">Email</label>
+    <div class="col-md-4">
+      <input type="text" class="form-control" id="inputUsername" name="email" value="{{ post_value('email', @user.email) }}" required>
+      <check if="{{ @violations.email }}"><span class="help-block">{{ implode('<br>', @violations.email) }}</span></check>
+    </div>
+  </div>
+  <div class="form-group {{ decide(@violations.new_password, 'has-error') }}"">
+    <label class="control-label col-md-2" for="inputNewPassword">Password Baru</label>
+    <div class="col-md-3">
+      <input type="password" class="form-control" id="inputNewPassword" name="new_password">
+      <check if="{{ @violations.new_password }}"><span class="help-block">{{ implode('<br>', @violations.new_password) }}</span></check>
+    </div>
+  </div>
+  <div class="form-group {{ decide(@violations.user_roles, 'has-error') }}"">
+    <label class="control-label required col-md-2" for="inputRoles">Roles</label>
+    <div class="col-md-3">
+      <set userRoles="{{ post_value('user_roles', @user.user_roles?:[]) }}" />
+      <repeat group="{{ @user->getAvailableRoles() }}" value="{{ @item }}" key="{{ @label }}">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="inputRoles" name="user_roles[]" value="{{ @item }}" {{ in_array(@item, @userRoles) ? 'checked' : '' }}> {{ @label }}
+          </label>
+        </div>
+      </repeat>
+      <check if="{{ @violations.user_roles }}"><span class="help-block">{{ implode('<br>', @violations.user_roles) }}</span></check>
+    </div>
+  </div>
+  <div class="form-group {{ decide(@violations.blocked, 'has-error') }}"">
+    <label class="control-label required col-md-2" for="inputBlocked">Blok</label>
+    <div class="col-md-3">
+      <set blocked="{{ post_value('blocked', @user.blocked) }}" />
+      <repeat group="{{ @blockOptions }}" value="{{ @item }}" key="{{ @label }}">
+        <div class="radio">
+          <label>
+            <input type="radio" id="inputBlocked" name="blocked" value="{{ @item }}" {{ @blocked == @item ? 'checked' : '' }}> {{ @label }}
+          </label>
+        </div>
+      </repeat>
+      <check if="{{ @violations.blocked }}"><span class="help-block">{{ implode('<br>', @violations.blocked) }}</span></check>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-10 col-md-offset-2">
+      <button type="submit" class="btn btn-primary">Simpan</button>
+      <a href="{{ route('user') }}" class="btn btn-default">Batal</a>
+    </div>
+  </div>
+</form>

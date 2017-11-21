@@ -1,0 +1,53 @@
+<expr expr="{{ setup_prefix('title', 'Dashboard') }}" />
+
+<h3 class="page-header">Dashboard</h3>
+
+<div class="row">
+  <div class="col-md-9">
+    <div id="user-stat-container" style="position: relative">
+      <canvas id="user-stat"></canvas>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Last Login</div>
+      <div class="panel-body text-right">
+        <strong class="text-primary lead" data-moment-now="{{ @last_login.stamp }}">~</strong>
+      </div>
+    </div>
+
+    <div class="panel panel-success">
+      <div class="panel-heading">User Online</div>
+      <div class="panel-body">
+        <table class="table table-condensed text-success" id="user-online">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th class="text-right">Visitor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="user-online-user">~</td>
+              <td id="user-online-visitor" class="text-right">~</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">Database Status</div>
+      <div class="panel-body text-right">
+        <check if="{{ @healthy }}">
+          <true>
+            <strong class="text-info lead">HEALTHY</strong>
+          </true>
+          <false>
+            <strong class="text-danger lead">NEED REPAIR</strong>
+          </false>
+        </check>
+      </div>
+    </div>
+  </div>
+</div>

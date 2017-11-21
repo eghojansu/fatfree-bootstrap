@@ -1,0 +1,55 @@
+<expr expr="{{ breadcrumb_add('#laporan', null, 'Laporan')->addCurrentRoute('Rekapitulasi User') }}" />
+<expr expr="{{ setup_prefix('title', 'Laporan Rekapitulasi User') }}" />
+
+<h3 class="page-header">Laporan Rekapitulasi User</h3>
+
+<div class="row crud-control-container">
+  <div class="col-xs-8">
+    <form class="form-horizontal form-filter">
+      <a href="#filter-open" class="btn btn-default">Tampilkan Filter</a>
+      <include href="admin/laporan/_periode_filter.html" />
+      <div class="form-group">
+        <div class="col-xs-9 col-xs-offset-3">
+          <button type="submit" class="btn btn-info">Filter</button>
+          <a href="#filter-close" class="btn btn-default">Tutup</a>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-xs-4">
+    <div class="btn-grup crud-control pull-right">
+      <a href="{{ route('laporan_user_print', null, @GET) }}" class="btn btn-info" data-provide="print">Print</a>
+    </div>
+  </div>
+</div>
+
+<include href="tools/alert.html" />
+
+<set colspan="4" />
+<table class="table table-bordered table-hover table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nama</th>
+      <th>Username</th>
+      <th>Tanggal Buat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <repeat group="{{ @pagination->subset }}" value="{{ @item }}">
+      <tr>
+        <td>{{ @pagination->index() }}</td>
+        <td>{{ @item.nama }}</td>
+        <td>{{ @item.username }}</td>
+        <td>{{ date_sql(@item.created_at) }}</td>
+      </tr>
+    </repeat>
+    <check if="{{ @pagination->isEmpty() }}">
+      <tr>
+        <td colspan="{{ @colspan }}"><em>Data tidak ditemukan</em></td>
+      </tr>
+    </check>
+  </tbody>
+</table>
+
+<include href="tools/pagination.html" />

@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+
+$app = Base::instance();
+
+if (empty($app['GET.env'])) {
+    $app->set('GET.env', 'dev');
+}
+
+$kernel = new App\Kernel($app['GET.env']);
+$kernel
+    ->loadConfiguration($app)
+    ->registerCommands($app)
+    ->addNutrition()
+;
+$app->run();

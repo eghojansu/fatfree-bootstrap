@@ -1,0 +1,139 @@
+body {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.page-header {
+    margin-top: 0;
+}
+
+.breadcrumb-container {
+    background-color: $breadcrumb-bg;
+    border-radius: $border-radius-base;
+    font-size: smaller;
+
+    .breadcrumb {
+        background-color: transparent;
+
+        > .active {
+            color: $breadcrumb-active-color;
+        }
+    }
+}
+
+.crud-control-container {
+    margin-bottom: 20px;
+}
+
+.crud-pagination {
+    .pagination {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.table-detail {
+    &>tbody {
+        &>tr{
+            &>td:first-child {
+                width: 200px;
+            }
+        }
+    }
+}
+
+.form-tabs {
+    margin-bottom: 20px;
+}
+
+.wysiwyg {
+    max-height: 300px;
+}
+
+.control-label {
+    &.required {
+        &:after {
+            content: ' *';
+            @extend .text-danger;
+        }
+    }
+}
+
+.form-filter {
+    .form-group {
+        display: none;
+    }
+}
+
+.about-apps {
+    max-width: 400px;
+    margin: 30px auto;
+}
+
+.help-content {
+    $help-text-color: #767676;
+    $help-padding-left: 20px;
+
+    font-size: 13px;
+    color: $help-text-color;
+
+    .help-header {
+        font-size: smaller;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: block;
+        padding-left: $help-padding-left;
+    }
+
+    .help-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            a {
+                display: block;
+                padding: 4px $help-padding-left;
+                color: inherit;
+                text-decoration: none;
+
+                &:hover {
+                    color: darken($help-text-color, 10%);
+                    padding-left: $help-padding-left - 1px;
+                    border-left: solid 1px $help-text-color;
+                }
+            }
+
+            &.active {
+                a {
+                    color: darken($help-text-color, 10%);
+                    font-weight: 600;
+                    padding-left: $help-padding-left - 2px;
+                    border-left: solid 2px $help-text-color;
+                }
+            }
+        }
+    }
+}
+
+.menu-quote {
+    padding: 3px 5px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, .8);
+    color: white;
+    font-family: monospace;
+    font-size: 12px;
+    margin: auto 5px;
+}
+
+.btn-black {
+    @extend .btn-primary;
+
+    background-color: rgba(0, 0, 0, .8);
+    border-color: rgba(0, 0, 0, .9);
+
+    &:hover {
+        background-color: rgba(0, 0, 0, .7);
+        border-color: rgba(0, 0, 0, .8);
+    }
+}

@@ -1,0 +1,41 @@
+<expr expr="{{ setup_prefix('title', 'Laporan '.@report->getModeLabel().' Periode '. @report->getPeriodLabel().' - Rekapitulasi ERF') }}" />
+
+<h4 class="page-header">Laporan Rekapitulasi ERF</h4>
+
+<table class="table">
+  <tbody>
+    <tr>
+      <th class="w20">Laporan</th>
+      <td class="w30">: {{ @report->getModeLabel() ?: 'All' }}</td>
+      <th class="w20 text-right">Periode :</th>
+      <td class="w30">{{ @report->getPeriodLabel() ?: 'All' }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<set colspan="4" />
+<table class="table table-bordered table-hover table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nama</th>
+      <th>Username</th>
+      <th>Tanggal Buat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <repeat group="{{ @items }}" value="{{ @item }}" counter="{{ @no }}">
+      <tr>
+        <td>{{ @no }}</td>
+        <td>{{ @item.nama }}</td>
+        <td>{{ @item.username }}</td>
+        <td>{{ date_sql(@item.created_at) }}</td>
+      </tr>
+    </repeat>
+    <check if="{{ empty(@items) }}">
+      <tr>
+        <td colspan="{{ @colspan }}"><em>Data tidak ditemukan</em></td>
+      </tr>
+    </check>
+  </tbody>
+</table>

@@ -1,0 +1,78 @@
+<set appTitle="{{ config('appTitle') }}" />
+<expr expr="{{ setup_suffix('title', @appTitle) }}" />
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ setup_get('title') }}</title>
+
+    <link href="{{ path('assets/admin.css') }}" rel="stylesheet">
+    <link href="{{ path('assets/vendor.css') }}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ route('homepage') }}">{{ config('appAlias') }}</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="main-nav">
+          <include href="tools/nav.html" with="navClass=nav navbar-nav, nav=dashboard" />
+          <include href="tools/nav.html" with="navClass=nav navbar-nav navbar-right, nav=account" />
+          <set maxNameLen="30" />
+          <set name="{{ user_prop('nama') }}" />
+          <p class="navbar-text navbar-right hidden-xs" title="{{ @name }}" data-toggle="tooltip" data-placement="bottom">{{ welcome_time() }}, <em class="text-info">{{ length(@maxNameLen, @name, '>') ? substr(@name, 0, @maxNameLen) .'&hellip;' : @name }}&nbsp;&nbsp;</em></p>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <expr expr="{{ breadcrumb_root('dashboard') }}" />
+          <include href="tools/breadcrumb.html" />
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {{ raw(@admin_content) }}
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <p class="navbar-text navbar-right visible-xs-block text-center" style="margin-right: 15px">{{ @appTitle }} &ndash; 2017 {{ date('Y') > 2017 ? date(' - Y') : '' }} &ndash; powered by Eko Kurniawan</p>
+        <p class="navbar-text navbar-right hidden-xs" style="margin-right: 15px">{{ @appTitle }} &ndash; 2017 {{ date('Y') > 2017 ? date(' - Y') : '' }} &ndash; powered by Eko Kurniawan</p>
+        <p class="navbar-text navbar-left hidden-xs">Waktu server: <span class="server-time">{{ date('U') }}</span></p>
+      </div>
+    </nav>
+    <script>
+      var app = app||{path: {}};
+      app.path.online_user = "{{ route('dashboard_user') }}";
+      app.path.statistic_user = "{{ route('dashboard_statistic') }}";
+    </script>
+    <script src="{{ path('assets/vendor.js') }}"></script>
+    <script src="{{ path('assets/admin.js') }}"></script>
+  </body>
+</html>

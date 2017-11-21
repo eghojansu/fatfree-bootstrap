@@ -1,0 +1,47 @@
+@media screen {
+    body {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+
+    .page-header {
+        margin-top: 0;
+    }
+}
+
+.w50 {
+    width: 50% !important;
+}
+.w30 {
+    width: 30% !important;
+}
+.w20 {
+    width: 20% !important;
+}
+
+ul.option {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li:before {
+        content: "";
+        width: 15px;
+        height: 15px;
+        border: solid 1px black;
+        background: white;
+        display: block;
+        float: left;
+        margin-right: 5px;
+    }
+}
+
+.table-detail {
+    &>tbody {
+        &>tr{
+            &>td:first-child {
+                width: 200px;
+            }
+        }
+    }
+}
