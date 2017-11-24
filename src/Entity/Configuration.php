@@ -4,17 +4,17 @@ namespace App\Entity;
 
 use Nutrition\SQL\Mapper;
 
-class Setting extends Mapper
+class Configuration extends Mapper
 {
     public function onMapBeforeInsert($that, array $pkeys)
     {
-        if (!$that->get('created_at')) {
-            $that->set('created_at', self::sqlTimestamp());
+        if (!$that->get('CreatedAt')) {
+            $that->set('CreatedAt', self::sqlTimestamp());
         }
     }
 
     public function onMapBeforeUpdate($that, array $pkeys)
     {
-        $that->set('updated_at', self::sqlTimestamp());
+        $that->set('UpdatedAt', self::sqlTimestamp());
     }
 }

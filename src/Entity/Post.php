@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Nutrition\SQL\Criteria;
 use Nutrition\SQL\Mapper;
+use Nutrition\Utils\PaginationSetup;
 
 class Post extends Mapper
 {
@@ -13,35 +15,71 @@ class Post extends Mapper
     const TYPE_HIDDEN = 'hidden';
 
 
+    public static function getEditablePostTypes()
+    {
+        return [
+            'Published' => self::TYPE_PUBLISHED,
+            'Draft' => self::TYPE_DRAFT,
+            'Hidden' => self::TYPE_HIDDEN
+        ];
+    }
+
+    public function typeLabel()
+    {
+        return array_search($this->Type, self::getEditablePostTypes());
+    }
+
     public function getWelcomeContent()
     {
-        return $this->findOneByTipe(self::TYPE_WELCOME);
+        return $this->findOneByType(self::TYPE_WELCOME);
     }
 
     public function getAboutContent()
     {
-        return $this->findOneByTipe(self::TYPE_ABOUT);
+        return $this->findOneByType(self::TYPE_ABOUT);
     }
 
     public function getPosts()
     {
-        return $this->findByTipe(self::TYPE_PUBLISHED);
+        return $this->findByType(self::TYPE_PUBLISHED);
+    }
+
+    public function getEditablePosts()
+    {
+        $setup = PaginationSetup::instance();
+        $criteria = Criteria::create()->add(
+            'Type',
+            self::getEditablePostTypes()
+        );
+
+        if ($keyword = $setup->getRequestArg('keyword')) {
+            $criteria->addCriteria(
+                '(Title like :keyword or Headline like :keyword)',
+                ['keyword'=>'%'.$keyword.'%']
+            );
+        }
+
+        return $this->createPagination(
+            $setup->getRequestPage() - 1,
+            $setup->getPerPage(),
+            $criteria->get()
+        );
     }
 
     public function getPost($slug)
     {
-        return $this->findone(['tipe = ? and slug = ?', self::TYPE_PUBLISHED, $slug]);
+        return $this->findone(['Type = ? and Slug = ?', self::TYPE_PUBLISHED, $slug]);
     }
 
     public function onMapBeforeInsert($that, array $pkeys)
     {
-        if (!$that->get('created_at')) {
-            $that->set('created_at', self::sqlTimestamp());
+        if (!$that->get('CreatedAt')) {
+            $that->set('CreatedAt', self::sqlTimestamp());
         }
     }
 
     public function onMapBeforeUpdate($that, array $pkeys)
     {
-        $that->set('updated_at', self::sqlTimestamp());
+        $that->set('UpdatedAt', self::sqlTimestamp());
     }
 }

@@ -15,7 +15,7 @@ class MaintenanceController extends Controller
             !$this->config->isMaintenance()
             && !$this->access->isGranted('ROLE_SUPER_ADMIN')
         ) {
-            $app->error(403);
+            $app->error(404);
         }
     }
 

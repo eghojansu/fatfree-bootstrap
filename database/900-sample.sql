@@ -4,8 +4,8 @@
 
 SET FOREIGN_KEY_CHECKS=0;
 
-INSERT INTO post
-    (slug, title, headline, konten, tipe, created_at)
+INSERT INTO Posts
+    (`Slug`, `Title`, `Headline`, `Content`, `Type`, `CreatedAt`)
 VALUES
     ("berita-1", "Berita 1", "Berita 1", "Berita 1", "published", NOW()),
     ("berita-2", "Berita 2", "Berita 2", "Berita 2", "published", NOW()),

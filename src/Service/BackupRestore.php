@@ -3,11 +3,11 @@
 namespace App\Service;
 
 use App\Entity\Post;
-use App\Entity\Setting;
+use App\Entity\Configuration;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\UserLog;
-use App\Service\Setting as Config;
+use App\Service\Setting;
 use Base;
 use DB\SQL;
 use Nutrition\SQL\ConnectionBuilder;
@@ -21,23 +21,15 @@ class BackupRestore extends Prefab
     /** @var array Table with its id */
     private $tables;
 
-    /** @var array Unsafe tables to direct import */
-    private $unsafe;
-
 
     public function __construct($value='')
     {
         $this->tables = [
-            Post::tableName(),
-            Setting::tableName(),
-            Task::tableName(),
-            User::tableName(),
-            UserLog::tableName(),
-        ];
-        $this->unsafe = [
-            Setting::tableName(),
-            Task::tableName(),
-            UserLog::tableName(),
+            Post::tableName() => true,
+            Configuration::tableName() => false,
+            Task::tableName() => false,
+            User::tableName() => true,
+            UserLog::tableName() => false,
         ];
     }
 
@@ -78,9 +70,9 @@ class BackupRestore extends Prefab
 
         $user = UserManager::instance()->getUser();
 
-        $task->set('task', Task::TYPE_BACKUP);
-        $task->set('description', $desc);
-        $task->set('user_id', $user ? $user->id : null);
+        $task->set('Task', Task::TYPE_BACKUP);
+        $task->set('Description', $desc);
+        $task->set('UserID', $user ? $user->ID : null);
         $task->save();
 
         return $this;
@@ -100,10 +92,10 @@ class BackupRestore extends Prefab
 
             $user = UserManager::instance()->getUser();
 
-            $task->set('task', Task::TYPE_RESTORE);
-            $task->set('description', $desc);
-            $task->set('file', $basename);
-            $task->set('user_id', $user ? $user->id : null);
+            $task->set('Task', Task::TYPE_RESTORE);
+            $task->set('Description', $desc);
+            $task->set('File', $basename);
+            $task->set('UserID', $user ? $user->ID : null);
             $task->save();
         }
 
@@ -113,16 +105,16 @@ class BackupRestore extends Prefab
     public function getUncompleteBackupTask()
     {
         return Task::create()->findone(
-            ['progress < 100 and task = ?', Task::TYPE_BACKUP],
-            ['order' => 'created_at']
+            ['Progress < 100 and Task = ?', Task::TYPE_BACKUP],
+            ['order' => 'CreatedAt']
         );
     }
 
     public function getUncompleteRestoreTask()
     {
         return Task::create()->findone(
-            ['progress < 100 and task = ?', Task::TYPE_RESTORE],
-            ['order' => 'created_at']
+            ['Progress < 100 and Task = ?', Task::TYPE_RESTORE],
+            ['order' => 'CreatedAt']
         );
     }
 
@@ -143,7 +135,7 @@ class BackupRestore extends Prefab
 
         $eol = "\n";
         $app = Base::instance();
-        $config = Config::instance();
+        $config = Setting::instance();
         $conn = ConnectionBuilder::instance()->getConnection();
         $file = CommonUtil::random(8).'.sql';
         $start = microtime(true);
@@ -160,15 +152,15 @@ class BackupRestore extends Prefab
 
         fwrite($ftemp, "-- @backup_file $file$eol".
                        "-- @generated ".date('c').$eol.
-                       "-- @app {$config[appTitle]}$eol".
+                       "-- @app {$config[AppTitle]}$eol".
                        "-- @version {$app[APP_VERSION]}$eol$eol"
         );
         $counter = 0;
         $tableCount = count($this->tables);
-        foreach ($this->tables as $table) {
-            $this->buildBackupTable($ftemp, $table, $conn, $eol);
+        foreach ($this->tables as $table => $safe) {
+            $this->buildBackupTable($ftemp, $table, $safe, $conn, $eol);
             $counter++;
-            $task->set('progress', $counter/$tableCount*100);
+            $task->set('Progress', $counter/$tableCount*100);
             $task->save();
         }
         $ellapsed = (microtime(true)-$start)/60;
@@ -181,14 +173,14 @@ class BackupRestore extends Prefab
         );
         fclose($ftemp);
 
-        $task->set('complete_at', $task->sqlTimestamp());
-        $task->set('file', $file);
+        $task->set('CompleteAt', $task->sqlTimestamp());
+        $task->set('File', $file);
         $task->save();
 
         return true;
     }
 
-    private function buildBackupTable($resource, $source, SQL $conn, $eol)
+    private function buildBackupTable($resource, $source, $safe, SQL $conn, $eol)
     {
         $pdo = $conn->pdo();
         $table = $conn->quotekey($source);
@@ -200,7 +192,7 @@ class BackupRestore extends Prefab
         $tableCounter = 1;
         $counter = 1;
         $max = 250;
-        $prefix = in_array($source, $this->unsafe) ? "-- @unsafe " : '';
+        $prefix = $safe ? '' : "-- @unsafe ";
 
         fwrite($resource, "-- @startTable: $source$eol$eol");
         fwrite($resource, "{$prefix}SET FOREIGN_KEY_CHECKS=0;$eol".
@@ -260,16 +252,16 @@ class BackupRestore extends Prefab
             @mkdir($app['RESTORE_DIR']);
         }
 
-        $task->set('progress', 20);
+        $task->set('Progress', 20);
         $task->save();
 
-        $restore = @file_get_contents($app['RESTORE_DIR'].$task->file);
+        $restore = @file_get_contents($app['RESTORE_DIR'].$task->File);
         if ($restore) {
             $pdo->exec($restore);
         }
 
-        $task->set('complete_at', $task->sqlTimestamp());
-        $task->set('progress', 100);
+        $task->set('CompleteAt', $task->sqlTimestamp());
+        $task->set('Progress', 100);
         $task->save();
 
         return true;

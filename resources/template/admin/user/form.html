@@ -6,61 +6,62 @@
 
 <include href="tools/alert.html" />
 
+<expr expr="{{ error_set(@violations) }}" />
 <form method="POST" class="form-horizontal">
-  <div class="form-group {{ decide(@violations.nama, 'has-error') }}">
+  <div class="form-group {{ error_has('Name') }}">
     <label class="control-label required col-md-2" for="inputName">Nama</label>
     <div class="col-md-4">
-      <input type="text" class="form-control" id="inputName" name="nama" value="{{ post_value('nama', @user.nama) }}" required>
-      <check if="{{ @violations.nama }}"><span class="help-block">{{ implode('<br>', @violations.nama) }}</span></check>
+      <input type="text" class="form-control" id="inputName" name="Name" value="{{ post_value('Name', @user.Name) }}" required>
+      {{ error_get('Name') }}
     </div>
   </div>
-  <div class="form-group {{ decide(@violations.username, 'has-error') }}"">
+  <div class="form-group {{ error_has('Username') }}"">
     <label class="control-label required col-md-2" for="inputUsername">Username</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" id="inputUsername" name="username" value="{{ post_value('username', @user.username) }}" required>
-      <check if="{{ @violations.username }}"><span class="help-block">{{ implode('<br>', @violations.username) }}</span></check>
+      <input type="text" class="form-control" id="inputUsername" name="Username" value="{{ post_value('Username', @user.Username) }}" required>
+      {{ error_get('Username') }}
     </div>
   </div>
-  <div class="form-group {{ decide(@violations.email, 'has-error') }}"">
+  <div class="form-group {{ error_has('Email') }}"">
     <label class="control-label required col-md-2" for="inputUsername">Email</label>
     <div class="col-md-4">
-      <input type="text" class="form-control" id="inputUsername" name="email" value="{{ post_value('email', @user.email) }}" required>
-      <check if="{{ @violations.email }}"><span class="help-block">{{ implode('<br>', @violations.email) }}</span></check>
+      <input type="text" class="form-control" id="inputUsername" name="Email" value="{{ post_value('Email', @user.Email) }}" required>
+      {{ error_get('Email') }}
     </div>
   </div>
-  <div class="form-group {{ decide(@violations.new_password, 'has-error') }}"">
+  <div class="form-group {{ error_has('NewPassword') }}"">
     <label class="control-label col-md-2" for="inputNewPassword">Password Baru</label>
     <div class="col-md-3">
-      <input type="password" class="form-control" id="inputNewPassword" name="new_password">
-      <check if="{{ @violations.new_password }}"><span class="help-block">{{ implode('<br>', @violations.new_password) }}</span></check>
+      <input type="password" class="form-control" id="inputNewPassword" name="NewPassword">
+      {{ error_get('NewPassword') }}
     </div>
   </div>
-  <div class="form-group {{ decide(@violations.user_roles, 'has-error') }}"">
+  <div class="form-group {{ error_has('UserRoles') }}"">
     <label class="control-label required col-md-2" for="inputRoles">Roles</label>
     <div class="col-md-3">
-      <set userRoles="{{ post_value('user_roles', @user.user_roles?:[]) }}" />
+      <set userRoles="{{ post_value('UserRoles', @user.UserRoles?:[]) }}" />
       <repeat group="{{ @user->getAvailableRoles() }}" value="{{ @item }}" key="{{ @label }}">
         <div class="checkbox">
           <label>
-            <input type="checkbox" id="inputRoles" name="user_roles[]" value="{{ @item }}" {{ in_array(@item, @userRoles) ? 'checked' : '' }}> {{ @label }}
+            <input type="checkbox" id="inputRoles" name="UserRoles[]" value="{{ @item }}" {{ in_array(@item, @userRoles) ? 'checked' : '' }}> {{ @label }}
           </label>
         </div>
       </repeat>
-      <check if="{{ @violations.user_roles }}"><span class="help-block">{{ implode('<br>', @violations.user_roles) }}</span></check>
+      {{ error_get('UserRoles') }}
     </div>
   </div>
-  <div class="form-group {{ decide(@violations.blocked, 'has-error') }}"">
+  <div class="form-group {{ error_has('Blocked') }}"">
     <label class="control-label required col-md-2" for="inputBlocked">Blok</label>
     <div class="col-md-3">
-      <set blocked="{{ post_value('blocked', @user.blocked) }}" />
+      <set blocked="{{ post_value('Blocked', @user.Blocked) }}" />
       <repeat group="{{ @blockOptions }}" value="{{ @item }}" key="{{ @label }}">
         <div class="radio">
           <label>
-            <input type="radio" id="inputBlocked" name="blocked" value="{{ @item }}" {{ @blocked == @item ? 'checked' : '' }}> {{ @label }}
+            <input type="radio" id="inputBlocked" name="Blocked" value="{{ @item }}" {{ @blocked == @item ? 'checked' : '' }}> {{ @label }}
           </label>
         </div>
       </repeat>
-      <check if="{{ @violations.blocked }}"><span class="help-block">{{ implode('<br>', @violations.blocked) }}</span></check>
+      {{ error_get('Blocked') }}
     </div>
   </div>
   <div class="form-group">

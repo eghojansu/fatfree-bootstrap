@@ -1,0 +1,52 @@
+<expr expr="{{ setup_prefix('title', @title) }}" />
+<expr expr="{{ breadcrumb_current(@title) }}" />
+<expr expr="{{ menu_set('post') }}" />
+
+<h3 class="page-header">Form Post</h3>
+
+<include href="tools/alert.html" />
+
+<expr expr="{{ error_set(@violations) }}" />
+<form method="POST" class="form-horizontal">
+  <div class="form-group {{ error_has('Title') }}">
+    <label class="control-label required col-md-2" for="inputTitle">Judul</label>
+    <div class="col-md-10">
+      <input type="text" class="form-control" id="inputTitle" name="Title" value="{{ post_value('Title', @post.Title) }}" required>
+      {{ error_get('Title') }}
+    </div>
+  </div>
+  <div class="form-group {{ error_has('Headline') }}"">
+    <label class="control-label required col-md-2" for="inputHeadline">Headline</label>
+    <div class="col-md-10">
+      <textarea class="form-control" id="inputHeadline" name="Headline" required data-provide="wysiwyg" style="height: 100px">{{ post_value('Headline', @post.Headline) }}</textarea>
+      {{ error_get('Headline') }}
+    </div>
+  </div>
+  <div class="form-group {{ error_has('Content') }}"">
+    <label class="control-label required col-md-2" for="inputContent">Content</label>
+    <div class="col-md-10">
+      <textarea class="form-control" id="inputContent" name="Content" required data-provide="wysiwyg">{{ post_value('Content', @post.Content) }}</textarea>
+      {{ error_get('Content') }}
+    </div>
+  </div>
+  <div class="form-group {{ error_has('Type') }}"">
+    <label class="control-label required col-md-2" for="inputRoles">Type</label>
+    <div class="col-md-3">
+      <set type="{{ post_value('Type', @post.Type) }}" />
+      <repeat group="{{ @post->getEditablePostTypes() }}" value="{{ @item }}" key="{{ @label }}">
+        <div class="radio">
+          <label>
+            <input type="radio" id="inputRoles" name="Type" value="{{ @item }}" {{ @item==@type ? 'checked' : '' }}> {{ @label }}
+          </label>
+        </div>
+      </repeat>
+      {{ error_get('Type') }}
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-10 col-md-offset-2">
+      <button type="submit" class="btn btn-primary">Simpan</button>
+      <a href="{{ route('post') }}" class="btn btn-default">Batal</a>
+    </div>
+  </div>
+</form>

@@ -39,9 +39,9 @@
     <repeat group="{{ @pagination->subset }}" value="{{ @item }}">
       <tr>
         <td>{{ @pagination->index() }}</td>
-        <td>{{ @item.nama }}</td>
-        <td>{{ @item.username }}</td>
-        <td>{{ date_sql(@item.created_at) }}</td>
+        <td>{{ @item.Name }}</td>
+        <td>{{ @item.Username }}</td>
+        <td>{{ date_sql(@item.CreatedAt) }}</td>
       </tr>
     </repeat>
     <check if="{{ @pagination->isEmpty() }}">

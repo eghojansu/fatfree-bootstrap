@@ -25,15 +25,15 @@
       <span class="help-block"></span>
     </div>
   </div>
-  <div class="form-group {{ decide(@violations.confirm, 'has-error') }}"">
+  <div class="form-group {{ decide(@violations.Confirm, 'has-error') }}"">
     <label class="control-label required col-md-2" for="inputConfirm"></label>
     <div class="col-md-3">
       <div class="checkbox">
         <label>
-          <input type="checkbox" id="inputConfirm" name="confirm" value="true" required> Konfirmasi restore data
+          <input type="checkbox" id="inputConfirm" name="Confirm" value="true" required> Konfirmasi restore data
         </label>
       </div>
-      <check if="{{ @violations.confirm }}"><span class="help-block">{{ implode('<br>', @violations.confirm) }}</span></check>
+      <check if="{{ @violations.Confirm }}"><span class="help-block">{{ implode('<br>', @violations.Confirm) }}</span></check>
     </div>
   </div>
   <div class="form-group">

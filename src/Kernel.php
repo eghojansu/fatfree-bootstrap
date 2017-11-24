@@ -64,6 +64,9 @@ class Kernel
         $template->filter('menu_set', Menu::class . '::instance()->setCurrent');
         $template->filter('user_prop', UserManager::class . '::instance()->getUser()->get');
         $template->filter('welcome_time', Utils::class . '::welcomeTime');
+        $template->filter('error_set', Utils::class . '::violationSet');
+        $template->filter('error_has', Utils::class . '::violationHasError');
+        $template->filter('error_get', Utils::class . '::violationWriteError');
 
         return $this;
     }

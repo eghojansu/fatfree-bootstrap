@@ -8,9 +8,9 @@ use RuntimeException;
 
 class Setting extends MagicService
 {
-    const SET_TITLE = 'appTitle';
-    const SET_ALIAS = 'appAlias';
-    const SET_MAINTENANCE = 'maintenance';
+    const SET_TITLE = 'AppTitle';
+    const SET_ALIAS = 'AppAlias';
+    const SET_MAINTENANCE = 'Maintenance';
 
     const E_KEY = 'No configuration for key "%s"';
 
@@ -49,13 +49,13 @@ class Setting extends MagicService
             return $this;
         }
 
-        $setting = EntityLoader::instance()->setting(true);
-        $setting->load(['nama = ?', $name]);
-        $setting->set('nama', $name);
-        $setting->set('konten', $value ?? '~');
+        $setting = EntityLoader::instance()->configuration(true);
+        $setting->load(['Name = ?', $name]);
+        $setting->set('Name', $name);
+        $setting->set('Content', $value ?? '~');
         $setting->save();
 
-        $this->properties[$name] = $setting->get('konten');
+        $this->properties[$name] = $setting->get('Content');
 
         return $this;
     }
@@ -104,21 +104,21 @@ class Setting extends MagicService
             $this->checkKey($key);
         }
 
-        $mapper = EntityLoader::instance()->setting(true);
-        foreach ($mapper->findByNama(array_keys($values)) ?: [] as $setting) {
-            $key = $setting->nama;
-            $setting->konten = $values[$key] ?? '~';
+        $mapper = EntityLoader::instance()->configuration(true);
+        foreach ($mapper->findByName(array_keys($values)) ?: [] as $setting) {
+            $key = $setting->Name;
+            $setting->Content = $values[$key] ?? '~';
             $setting->save();
-            $this->properties[$key] = $setting->konten;
+            $this->properties[$key] = $setting->Content;
             unset($values[$key]);
         }
 
         foreach ($values as $key => $value) {
             $mapper->reset();
-            $mapper->nama = $key;
-            $mapper->konten = $value ?? '~';
+            $mapper->Name = $key;
+            $mapper->Content = $value ?? '~';
             $mapper->save();
-            $this->properties[$key] = $mapper->konten;
+            $this->properties[$key] = $mapper->Content;
         }
 
         return $this;
@@ -160,10 +160,10 @@ class Setting extends MagicService
     private function load()
     {
         if ($this->dry) {
-            foreach (EntityLoader::instance()->setting(true)->findByNama(
+            foreach (EntityLoader::instance()->configuration(true)->findByName(
                 array_keys($this->properties)
             ) ?: [] as $setting) {
-                $this->properties[$setting->nama] = $setting->konten;
+                $this->properties[$setting->Name] = $setting->Content;
             }
             $this->dry = false;
         }

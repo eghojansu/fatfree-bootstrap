@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc029d1ebb49f55bde06b207f658bddf",
+    "content-hash": "dd6c779fb0b5dd3475eec8c57e3dcdac",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -38,21 +38,67 @@
             "time": "2017-06-26T10:03:43+00:00"
         },
         {
-            "name": "eghojansu/nutrition",
-            "version": "v4.0.0",
+            "name": "eghojansu/bumbon-validation",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/eghojansu/nutrition.git",
-                "reference": "bef7193684d61c2dde42d17ab3f892e49e39c51c"
+                "url": "https://github.com/eghojansu/bumbon-validation.git",
+                "reference": "3d86fae5a054a0ed888ea60a8f7afa9caaf3c61d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eghojansu/nutrition/zipball/bef7193684d61c2dde42d17ab3f892e49e39c51c",
-                "reference": "bef7193684d61c2dde42d17ab3f892e49e39c51c",
+                "url": "https://api.github.com/repos/eghojansu/bumbon-validation/zipball/3d86fae5a054a0ed888ea60a8f7afa9caaf3c61d",
+                "reference": "3d86fae5a054a0ed888ea60a8f7afa9caaf3c61d",
                 "shasum": ""
             },
             "require": {
-                "bcosca/fatfree-core": "^3.6"
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bumbon\\Validation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eko Kurniawan",
+                    "email": "ekokurniawanbs@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Data Validation",
+            "homepage": "https://github.com/eghojansu/nutrition",
+            "keywords": [
+                "php",
+                "validation"
+            ],
+            "time": "2017-11-24T03:43:55+00:00"
+        },
+        {
+            "name": "eghojansu/nutrition",
+            "version": "v4.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eghojansu/nutrition.git",
+                "reference": "7c3ab225c576a31294039844c22c5040f9c9d4b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eghojansu/nutrition/zipball/7c3ab225c576a31294039844c22c5040f9c9d4b0",
+                "reference": "7c3ab225c576a31294039844c22c5040f9c9d4b0",
+                "shasum": ""
+            },
+            "require": {
+                "bcosca/fatfree-core": "^3.6",
+                "eghojansu/bumbon-validation": "^1.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.4"
@@ -86,7 +132,7 @@
                 "user",
                 "validation"
             ],
-            "time": "2017-11-21T11:32:42+00:00"
+            "time": "2017-11-24T07:58:50+00:00"
         }
     ],
     "packages-dev": [],

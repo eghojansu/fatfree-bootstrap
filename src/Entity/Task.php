@@ -15,18 +15,18 @@ class Task extends Mapper
 
     public function isBackup()
     {
-        return $this->task === self::TYPE_BACKUP;
+        return $this->Task === self::TYPE_BACKUP;
     }
 
     public function isRestore()
     {
-        return $this->task === self::TYPE_RESTORE;
+        return $this->Task === self::TYPE_RESTORE;
     }
 
     public function onMapBeforeInsert($that, array $pkeys)
     {
-        if (!$that->get('created_at')) {
-            $that->set('created_at', self::sqlTimestamp());
+        if (!$that->get('CreatedAt')) {
+            $that->set('CreatedAt', self::sqlTimestamp());
         }
     }
 
@@ -34,7 +34,7 @@ class Task extends Mapper
     {
         $setup = PaginationSetup::instance();
         $criteria = Criteria::create()
-            ->add('task', [self::TYPE_BACKUP,self::TYPE_RESTORE]);
+            ->add('Task', [self::TYPE_BACKUP,self::TYPE_RESTORE]);
 
         return $this->createPagination(
             $setup->getRequestPage() - 1,
@@ -45,6 +45,6 @@ class Task extends Mapper
 
     public function isComplete()
     {
-        return $this->progress == 100;
+        return $this->Progress == 100;
     }
 }

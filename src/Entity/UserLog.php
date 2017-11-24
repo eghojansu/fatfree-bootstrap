@@ -9,7 +9,7 @@ class UserLog extends Mapper
     public function getOnlineVisitor()
     {
         return $this->count([
-            'user_id is null and active and (? - stamp) < 300',
+            'UserID is null and Active and (? - Stamp) < 300',
             time()
         ]);
     }
@@ -17,16 +17,16 @@ class UserLog extends Mapper
     public function getOnlineUser()
     {
         return $this->count([
-            'user_id is not null and active and (? - stamp) < 300',
+            'UserID is not null and Active and (? - Stamp) < 300',
             time()
         ]);
     }
 
     public function getStatistic()
     {
-        $sql = 'SELECT FROM_UNIXTIME(stamp, "%Y-%m-%d") as gdate, count(session_id) as gcount'.
+        $sql = 'SELECT FROM_UNIXTIME(Stamp, "%Y-%m-%d") as gdate, count(SessionID) as gcount'.
                 ' from '.self::tableName().
-                ' group by FROM_UNIXTIME(stamp, "%Y-%m-%d")';
+                ' group by FROM_UNIXTIME(Stamp, "%Y-%m-%d")';
 
         return $this->db->exec($sql);
     }

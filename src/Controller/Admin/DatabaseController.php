@@ -61,7 +61,7 @@ class DatabaseController extends Controller
 
     public function restoreTaskAction(Base $app, array $params)
     {
-        $task = $this->entity->task->findOneById($params['task']);
+        $task = $this->entity->task->findOneByID($params['task']);
         $this->notFoundIfFalse($task);
 
         $performed = false;
@@ -92,7 +92,7 @@ class DatabaseController extends Controller
 
     public function backupTaskAction(Base $app, array $params)
     {
-        $task = $this->entity->task->findOneById($params['task']);
+        $task = $this->entity->task->findOneByID($params['task']);
         $this->notFoundIfFalse($task);
 
         $performed = false;

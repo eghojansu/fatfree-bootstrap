@@ -16,6 +16,7 @@ use Nutrition\Security\UserManager;
 use Nutrition\Utils\Breadcrumb;
 use Nutrition\Utils\ExtendedTemplate;
 use Nutrition\Utils\FlashMessage;
+use Nutrition\Utils\Route;
 use Nutrition\Utils\TemplateSetup;
 use RuntimeException;
 
@@ -25,6 +26,7 @@ abstract class Controller
     {
         switch ($name) {
             // case 'menu': return Menu::instance();
+            case 'route': return Route::instance();
             case 'breadcrumb': return Breadcrumb::instance();
             case 'setup': return TemplateSetup::instance();
             case 'access': return Authorization::instance();
@@ -35,7 +37,8 @@ abstract class Controller
             case 'db': return ConnectionBuilder::instance();
             case 'backup': return BackupRestore::instance();
             case 'app': return Base::instance();
-            case 'user': return UserManager::instance();
+            case 'user': return UserManager::instance()->getUser();
+            case 'userManager': return UserManager::instance();
             case 'entity': return EntityLoader::instance();
             case 'validator': return DataValidator::instance();
             case 'report': return ReportSetup::instance();

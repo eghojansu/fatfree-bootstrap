@@ -4,11 +4,11 @@
 <check if="{{ @news }}">
   <true>
     <repeat group="{{ @news }}" value="{{ @item }}">
-      <h3 class="page-header">{{ @item.title }}</h3>
+      <h3 class="page-header">{{ @item.Title }}</h3>
       <hr>
-      {{ @item.konten|raw }}
+      {{ raw(@item.Content) }}
       <br>
-      <a href="{{ route('news_item', ['slug'=>@item.slug]) }}">{{ @item.title }}</a>
+      <a href="{{ route('news_item', ['slug'=>@item.Slug]) }}">{{ @item.Title }}</a>
       <hr>
     </repeat>
   </true>

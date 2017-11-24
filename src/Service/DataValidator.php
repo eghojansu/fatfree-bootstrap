@@ -2,19 +2,19 @@
 
 namespace App\Service;
 
+use App\Entity\Post;
 use App\Entity\User;
 use App\Service\Setting;
 use Base;
+use Bumbon\Validation\Constraint\Choice;
+use Bumbon\Validation\Constraint\Email;
+use Bumbon\Validation\Constraint\IsTrue;
+use Bumbon\Validation\Constraint\Length;
+use Bumbon\Validation\Constraint\NotBlank;
+use Bumbon\Validation\Validation;
+use Nutrition\Constraint\Unique;
+use Nutrition\Constraint\UserPassword;
 use Nutrition\Utils\FlashMessage;
-use Nutrition\Validator\Constraint\Boolean;
-use Nutrition\Validator\Constraint\Choice;
-use Nutrition\Validator\Constraint\Email;
-use Nutrition\Validator\Constraint\IsTrue;
-use Nutrition\Validator\Constraint\Length;
-use Nutrition\Validator\Constraint\NotBlank;
-use Nutrition\Validator\Constraint\NotInTable;
-use Nutrition\Validator\Constraint\UserPassword;
-use Nutrition\Validator\Validation;
 use Prefab;
 use RuntimeException;
 
@@ -32,11 +32,11 @@ class DataValidator extends Prefab
         ];
     }
 
-    public function handle($name, $success, array $groups = null, ...$params)
+    public function handle($name, $success, ...$params)
     {
         $app = Base::instance();
 
-        array_unshift($params, $name, $groups);
+        array_unshift($params, $name);
         if ($app['VERB'] === 'POST' && call_user_func_array([$this, 'validate'], $params)) {
             call_user_func_array($success, [$app, $this->data($name)]);
         } elseif ($this->hasViolation($name)) {
@@ -51,10 +51,10 @@ class DataValidator extends Prefab
         if (method_exists($this, $method)) {
             $groups = $groups ?: ['Default'];
             $validation = call_user_func_array([$this, $method], $params);
-            $this->violations[$name] = $validation->validate($groups);
+            $this->violations[$name] = $validation->validate($this->postData(), $groups);
             $this->data[$name] = $validation->getData();
 
-            return $this->violations[$name]->hasNoViolation();
+            return $this->violations[$name]->noViolation();
         }
 
         return null;
@@ -77,7 +77,7 @@ class DataValidator extends Prefab
     public function data($name)
     {
         if (empty($this->data[$name])) {
-            return null;
+            return [];
         }
 
         return $this->data[$name];
@@ -95,30 +95,30 @@ class DataValidator extends Prefab
 
     private function validatorUser(User $user)
     {
-        return Validation::create($this->postData(), [
-            'nama' => [
+        return Validation::create([
+            'Name' => [
                 new NotBlank(),
                 new Length(['max'=>100])
             ],
-            'username' => [
+            'Username' => [
                 new NotBlank(),
                 new Length(['max'=>50]),
-                new NotInTable(['mapper'=>$user,'current_id'=>$user->id,'field'=>'username'])
+                new Unique(['mapper'=>$user,'current_id'=>$user->ID,'field'=>'Username'])
             ],
-            'email' => [
+            'Email' => [
                 new NotBlank(),
                 new Length(['max'=>100]),
                 new Email(),
-                new NotInTable(['mapper'=>$user,'current_id'=>$user->id,'field'=>'email'])
+                new Unique(['mapper'=>$user,'current_id'=>$user->ID,'field'=>'Email'])
             ],
-            'new_password' => [
-                new Length(['min'=>5]),
+            'NewPassword' => [
+                new Length(['min'=>5,'trim'=>false]),
             ],
-            'blocked' => [
+            'Blocked' => [
                 new NotBlank(),
                 new Choice(['choices'=>self::optionOnOff()]),
             ],
-            'user_roles' => [
+            'UserRoles' => [
                 new NotBlank(),
                 new Choice(['choices'=>User::getAvailableRoles(),'multiple'=>true]),
             ],
@@ -127,20 +127,20 @@ class DataValidator extends Prefab
 
     private function validatorAccount(User $user)
     {
-        return Validation::create($this->postData(), [
-            'nama' => [
+        return Validation::create([
+            'Name' => [
                 new NotBlank(),
                 new Length(['max'=>100])
             ],
-            'username' => [
+            'Username' => [
                 new NotBlank(),
                 new Length(['max'=>50]),
-                new NotInTable(['mapper'=>$user,'current_id'=>$user->id,'field'=>'username'])
+                new Unique(['mapper'=>$user,'current_id'=>$user->ID,'field'=>'Username'])
             ],
-            'new_password' => [
-                new Length(['min'=>5]),
+            'NewPassword' => [
+                new Length(['min'=>5,'trim'=>false]),
             ],
-            'current_password' => [
+            'CurrentPassword' => [
                 new NotBlank(),
                 new UserPassword(),
             ],
@@ -149,7 +149,7 @@ class DataValidator extends Prefab
 
     private function validatorSetting()
     {
-        return Validation::create($this->postData(), [
+        return Validation::create([
             Setting::SET_TITLE => [
                 new NotBlank(),
                 new Length(['max'=>100])
@@ -163,7 +163,7 @@ class DataValidator extends Prefab
 
     private function validatorMaintenance()
     {
-        return Validation::create($this->postData(), [
+        return Validation::create([
             Setting::SET_MAINTENANCE => [
                 new NotBlank(),
                 new Choice(['choices'=>self::optionOnOff()])
@@ -173,10 +173,32 @@ class DataValidator extends Prefab
 
     private function validatorConfirm()
     {
-        return Validation::create($this->postData(), [
-            'confirm' => [
+        return Validation::create([
+            'Confirm' => [
                 new NotBlank(),
                 new IsTrue(),
+            ],
+        ]);
+    }
+
+    private function validatorPost()
+    {
+        return Validation::create([
+            'Title' => [
+                new NotBlank(),
+                new Length(['max'=>200]),
+            ],
+            'Headline' => [
+                new NotBlank(),
+                new Length(['max'=>250]),
+            ],
+            'Content' => [
+                new NotBlank(),
+                new Length(['max'=>1000]),
+            ],
+            'Type' => [
+                new NotBlank(),
+                new Choice(['choices'=>Post::getEditablePostTypes()]),
             ],
         ]);
     }

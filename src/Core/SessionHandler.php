@@ -11,7 +11,7 @@ use PDO;
 class SessionHandler implements \SessionHandlerInterface
 {
     /** @var string */
-    private static $table = 'user_log';
+    private static $table = 'UserLogs';
 
     /** @var string */
     private $ip;
@@ -40,7 +40,7 @@ class SessionHandler implements \SessionHandlerInterface
 
     private static function findSession($session_id)
     {
-        $query = self::query('SELECT * FROM {table} WHERE session_id = ? and active LIMIT 1');
+        $query = self::query('SELECT * FROM {table} WHERE SessionID = ? and Active LIMIT 1');
         $query->execute([$session_id]);
 
         return $query->fetch(PDO::FETCH_ASSOC);
@@ -53,7 +53,7 @@ class SessionHandler implements \SessionHandlerInterface
 
     public function destroy($session_id)
     {
-        $query = self::query('UPDATE {table} SET active = 0 WHERE session_id = ?');
+        $query = self::query('UPDATE {table} SET Active = 0 WHERE SessionID = ?');
         $query->execute([$session_id]);
 
         return true;
@@ -61,7 +61,7 @@ class SessionHandler implements \SessionHandlerInterface
 
     public function gc($maxlifetime)
     {
-        $query = self::query('UPDATE {table} SET active = 0 WHERE stamp+? < ?');
+        $query = self::query('UPDATE {table} SET Active = 0 WHERE Stamp+? < ?');
         $query->execute([$maxlifetime, time()]);
 
         return true;
@@ -80,7 +80,7 @@ class SessionHandler implements \SessionHandlerInterface
             return '';
         }
 
-        if ($session['ip']!=$this->ip || $session['agent']!=$this->agent) {
+        if ($session['Ip']!=$this->ip || $session['Agent']!=$this->agent) {
             $this->destroy($session_id);
             $this->close();
 
@@ -89,7 +89,7 @@ class SessionHandler implements \SessionHandlerInterface
             $app->error(403);
         }
 
-        return $session['data'];
+        return $session['Data'];
     }
 
     public function write($session_id, $session_data)
@@ -97,19 +97,19 @@ class SessionHandler implements \SessionHandlerInterface
         $session = self::findSession($session_id);
         $user = UserManager::instance()->getUser();
         $data = [
-            'user_id' => $user ? $user->id : '',
-            'session_id' => $session_id,
-            'data' => $session_data,
-            'ip' => $this->ip,
-            'agent' => $this->agent,
-            'stamp' => time(),
-            'active' => 1,
+            'UserID' => $user ? $user->ID : '',
+            'SessionID' => $session_id,
+            'Data' => $session_data,
+            'Ip' => $this->ip,
+            'Agent' => $this->agent,
+            'Stamp' => time(),
+            'Active' => 1,
         ];
 
         if ($session) {
             $params = Criteria::buildCriteria($data + [$session_id], true);
             $sql = 'UPDATE {table} SET '.implode('=?,', array_keys($data)).'=?'.
-                ' WHERE session_id = ?';
+                ' WHERE SessionID = ?';
             array_shift($params);
             $query = self::query($sql);
             $query->execute($params);

@@ -1,14 +1,14 @@
-<expr expr="{{ setup_prefix('title', @item.title) }}" />
+<expr expr="{{ setup_prefix('title', @item['Title'].' - News') }}" />
 <expr expr="{{ menu_set('news') }}" />
 <expr expr="{{ breadcrumb_add('news')->addCurrentRoute() }}" />
 
 <check if="{{ @item }}">
   <true>
-    <h3 class="page-header">{{ @item.title }}</h3>
+    <h3 class="page-header">{{ @item.Title }}</h3>
     <hr>
-    {{ raw(@item.konten) }}
+    {{ raw(@item.Content) }}
     <br>
-    <a href="{{ route('news_item', ['slug'=>@item.slug]) }}">{{ @item.title }}</a>
+    <a href="{{ route('news_item', ['slug'=>@item.Slug]) }}">{{ @item.Title }}</a>
     <hr>
   </true>
   <false>

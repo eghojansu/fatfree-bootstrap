@@ -128,7 +128,7 @@ build_install() {
 
     # build asset
     echo -e "  ${INFO}building assets...${DEFAULT}"
-    gulp build --silent
+    gulp build --prod --silent
     echo -e "    ${INFO}done${DEFAULT}"
 
     rsync -aq \
@@ -276,7 +276,7 @@ build_patch() {
     if $buildAssets
     then
         echo -e "  ${INFO}building assets...${DEFAULT}"
-        gulp build --silent
+        gulp build --prod --silent
         echo -e "    ${INFO}done${DEFAULT}"
     fi
 

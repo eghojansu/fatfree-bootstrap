@@ -28,19 +28,19 @@
         <repeat group="{{ @history->subset }}" value="{{ @item }}">
           <tr>
             <td>{{ @history->index() }}</td>
-            <td>{{ @item.task }}</td>
-            <td>{{ @item.description }}</td>
-            <td>{{ @item.progress }}%</td>
-            <td>{{ date_sql(@item.created_at) }}</td>
-            <td>{{ date_sql(@item.complete_at) }}</td>
+            <td>{{ @item.Task }}</td>
+            <td>{{ @item.Description }}</td>
+            <td>{{ @item.Progress }}%</td>
+            <td>{{ date_sql(@item.CreatedAt) }}</td>
+            <td>{{ date_sql(@item.CompleteAt) }}</td>
             <td>
               <check if="{{ @item->isBackup() }}">
-                <check if="{{ @item->isComplete() && @item.file && file_exists(@BACKUP_DIR.@item['file']) }}">
+                <check if="{{ @item->isComplete() && @item.File && file_exists(@BACKUP_DIR.@item['File']) }}">
                   <true>
-                    <a href="{{ route('db_download', null, ['file'=>@item.file]) }}" class="btn btn-xs btn-info">Download</a>
+                    <a href="{{ route('db_download', null, ['file'=>@item.File]) }}" class="btn btn-xs btn-info">Download</a>
                   </true>
                   <false>
-                    <a href="{{ route('db_backup_force', ['task'=>@item.id]) }}" class="btn btn-xs btn-warning">Force Task</a>
+                    <a href="{{ route('db_backup_force', ['task'=>@item.ID]) }}" class="btn btn-xs btn-warning">Force Task</a>
                   </false>
                 </check>
               </check>
@@ -50,7 +50,7 @@
                     <em>Complete</em>
                   </true>
                   <false>
-                    <a href="{{ route('db_restore_force', ['task'=>@item.id]) }}" class="btn btn-xs btn-warning">Force Task</a>
+                    <a href="{{ route('db_restore_force', ['task'=>@item.ID]) }}" class="btn btn-xs btn-warning">Force Task</a>
                   </false>
                 </check>
               </check>

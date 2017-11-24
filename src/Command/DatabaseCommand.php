@@ -66,13 +66,13 @@ class DatabaseCommand extends Command
         $filesToImport = explode('/', $params['*']);
         $dir = $app['PROJECT_DIR'] . '/database';
         $filesAvailable = [
-            'reset'  => $dir.'/101-reset.sql',
-            'drop'   => $dir.'/100-drop.sql',
-            'create' => $dir.'/300-create.sql',
-            'admin'  => $dir.'/200-admin.sql',
-            'setup'  => $dir.'/201-setup.sql',
-            'sample'  => $dir.'/400-sample.sql',
-            'relation' => $dir.'/301-relation.sql',
+            'reset'  => $dir.'/301-reset.sql',
+            'drop'   => $dir.'/300-drop.sql',
+            'create' => $dir.'/100-create.sql',
+            'admin'  => $dir.'/400-admin.sql',
+            'setup'  => $dir.'/401-setup.sql',
+            'sample'  => $dir.'/900-sample.sql',
+            'relation' => $dir.'/200-relation.sql',
         ];
         $files = array_fill_keys(array_keys($filesAvailable), null);
 
@@ -104,14 +104,16 @@ class DatabaseCommand extends Command
             }
         }
 
-        $db = ConnectionBuilder::instance();
-        $conn = $db->getConnection();
+        $conn = ConnectionBuilder::instance()->getConnection()->pdo();
         $loaded = 0;
         foreach ($files as $key => $file) {
             if ($file) {
-                $sql = file_get_contents($file);
-                $conn->exec($sql);
-                $loaded++;
+                $file = (array) $file;
+                foreach ($file as $file_1) {
+                    $sql = file_get_contents($file_1);
+                    $conn->exec($sql);
+                    $loaded++;
+                }
             }
         }
 

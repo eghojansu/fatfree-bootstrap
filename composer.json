@@ -17,8 +17,14 @@
             "App\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "TestWork\\": "tests/test/",
+            "App\\Test\\": "tests/src/"
+        }
+    },
 	"require": {
         "php": ">=5.6",
-		"eghojansu/nutrition": "^4.0"
+		"eghojansu/nutrition": "^4.3"
 	}
 }

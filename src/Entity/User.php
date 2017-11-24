@@ -17,8 +17,8 @@ class User extends Mapper implements UserInterface, UserProviderInterface
     use ReportFilterTrait;
 
     protected $extras = [
-        'user_roles' => null,
-        'new_password' => null,
+        'UserRoles' => null,
+        'NewPassword' => null,
     ];
 
 
@@ -36,7 +36,7 @@ class User extends Mapper implements UserInterface, UserProviderInterface
 
         if ($keyword = $setup->getRequestArg('keyword')) {
             $criteria->addCriteria(
-                '(username like :keyword or email like :keyword)',
+                '(Username like :keyword or Email like :keyword or Name like :keyword)',
                 ['keyword'=>'%'.$keyword.'%']
             );
         }
@@ -50,7 +50,7 @@ class User extends Mapper implements UserInterface, UserProviderInterface
 
     public function findUser($id)
     {
-        return $this->findone(self::filterGuard()->add('id', $id)->get());
+        return $this->findone(self::filterGuard()->add('ID', $id)->get());
     }
 
     public function reportRekapUser()
@@ -82,8 +82,8 @@ class User extends Mapper implements UserInterface, UserProviderInterface
     {
         return Criteria::create()
             ->addCriteria(
-                'roles not like "%role_developer%" and id <> :sid',
-                ['sid'=>UserManager::instance()->getUser()->get('id')]
+                'Roles not like "%role_developer%" and ID <> :sid',
+                ['sid'=>UserManager::instance()->getUser()->get('ID')]
             );
     }
 
@@ -92,7 +92,7 @@ class User extends Mapper implements UserInterface, UserProviderInterface
     */
     public function getUsername()
     {
-        return $this->username;
+        return $this->Username;
     }
 
     /**
@@ -100,7 +100,7 @@ class User extends Mapper implements UserInterface, UserProviderInterface
     */
     public function getPassword()
     {
-        return $this->password;
+        return $this->Password;
     }
 
     /**
@@ -108,7 +108,7 @@ class User extends Mapper implements UserInterface, UserProviderInterface
     */
     public function getRoles()
     {
-        return $this->extras['user_roles'];
+        return $this->extras['UserRoles'];
     }
 
     /**
@@ -116,7 +116,7 @@ class User extends Mapper implements UserInterface, UserProviderInterface
     */
     public function isExpired()
     {
-        return filter_var($this->expired, FILTER_VALIDATE_BOOLEAN);
+        return filter_var($this->Expired, FILTER_VALIDATE_BOOLEAN);
     }
 
     /**
@@ -124,7 +124,7 @@ class User extends Mapper implements UserInterface, UserProviderInterface
     */
     public function isBlocked()
     {
-        return filter_var($this->blocked, FILTER_VALIDATE_BOOLEAN);
+        return filter_var($this->Blocked, FILTER_VALIDATE_BOOLEAN);
     }
 
     /**
@@ -133,7 +133,7 @@ class User extends Mapper implements UserInterface, UserProviderInterface
     public function loadByUsername($username)
     {
         return $this->findone([
-            '(username = :username or email = :username)',
+            '(Username = :username or Email = :username)',
             ':username'=>$username
         ]);
     }
@@ -141,37 +141,37 @@ class User extends Mapper implements UserInterface, UserProviderInterface
     public function getLastLogin()
     {
         return UserLog::create()->findone([
-            'user_id = ? and not active',
-            $this->id
+            'UserID = ? and not Active',
+            $this->ID
         ]);
     }
 
     public function onMapBeforeInsert($that, array $pkeys)
     {
-        if (!$that->get('created_at')) {
-            $that->set('created_at', self::sqlTimestamp());
+        if (!$that->get('CreatedAt')) {
+            $that->set('CreatedAt', self::sqlTimestamp());
         }
         $that->updatePassword()->updateRoles();
     }
 
     public function onMapBeforeUpdate($that, array $pkeys)
     {
-        $that->set('updated_at', self::sqlTimestamp());
+        $that->set('UpdatedAt', self::sqlTimestamp());
         $that->updatePassword()->updateRoles();
     }
 
     public function onMapLoad($that)
     {
-        $that->set('user_roles', explode(',', $that->roles));
-        $that->set('new_password', null);
+        $that->set('UserRoles', explode(',', $that->Roles));
+        $that->set('NewPassword', null);
     }
 
     private function updatePassword()
     {
-        if ($this->extras['new_password']) {
-            $this->password = Security::instance()
+        if ($this->extras['NewPassword']) {
+            $this->Password = Security::instance()
                 ->getPasswordEncoder()
-                ->encodePassword($this->extras['new_password']);
+                ->encodePassword($this->extras['NewPassword']);
         }
 
         return $this;
@@ -179,8 +179,8 @@ class User extends Mapper implements UserInterface, UserProviderInterface
 
     private function updateRoles()
     {
-        if ($this->extras['user_roles']) {
-            $this->roles = implode(',', $this->extras['user_roles']);
+        if ($this->extras['UserRoles']) {
+            $this->Roles = implode(',', $this->extras['UserRoles']);
         }
 
         return $this;

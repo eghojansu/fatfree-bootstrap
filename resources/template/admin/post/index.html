@@ -1,4 +1,4 @@
-<h3 class="page-header">Data User</h3>
+<h3 class="page-header">Post</h3>
 
 <div class="row crud-control-container">
   <div class="col-xs-8">
@@ -6,23 +6,20 @@
   </div>
   <div class="col-xs-4">
     <div class="btn-grup crud-control pull-right">
-      <a href="{{ route('user_create') }}" class="btn btn-primary">Data Baru</a>
+      <a href="{{ route('post_create') }}" class="btn btn-primary">Data Baru</a>
     </div>
   </div>
 </div>
 
 <include href="tools/alert.html" />
 
-<set colspan="7" />
+<set colspan="4" />
 <table class="table table-bordered table-hover table-striped">
   <thead>
     <tr>
       <th>#</th>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Nama</th>
-      <th>Blok</th>
-      <th>Expired</th>
+      <th>Title</th>
+      <th>Type</th>
       <th></th>
     </tr>
   </thead>
@@ -30,16 +27,13 @@
     <repeat group="{{ @pagination->subset }}" value="{{ @item }}">
       <tr>
         <td>{{ @pagination->index() }}</td>
-        <td>{{ @item.Username }}</td>
-        <td>{{ @item.Email }}</td>
-        <td>{{ @item.Name }}</td>
-        <td>{{ on_off(@item.Blocked) }}</td>
-        <td>{{ yes_no(@item.Expired) }}</td>
+        <td>{{ @item.Title }}</td>
+        <td>{{ @item->typeLabel() }}</td>
         <td>
-          <a href="{{ route('user_update', ['user'=>@item.ID]) }}" class="btn btn-xs btn-warning">
+          <a href="{{ route('post_update', ['post'=>@item.ID]) }}" class="btn btn-xs btn-warning">
             Edit
           </a>
-          <a href="{{ route('user_delete', ['user'=>@item.ID]) }}" class="btn btn-xs btn-danger">
+          <a href="{{ route('post_delete', ['post'=>@item.ID]) }}" class="btn btn-xs btn-danger">
             Delete
           </a>
         </td>

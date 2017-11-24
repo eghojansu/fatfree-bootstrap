@@ -58,6 +58,7 @@ class Menu extends BaseMenu
                     ['route'=>'setting', 'label'=>'Pengaturan Sistem'],
                     ['route'=>'setting_maintenance', 'label'=>'Maintenance'],
                     ['route'=>'user', 'label'=>'Data User'],
+                    ['route'=>'post', 'label'=>'Post'],
                     ['route'=>'db', 'label'=>'Database'],
                 ]
             ];

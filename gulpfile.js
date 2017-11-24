@@ -15,7 +15,7 @@ var config = require('./gulpfile-config.json');
 var argv = process.argv.slice(2);
 var env = 'dev';
 for (var i = argv.length - 1; i >= 0; i--) {
-    if (/^\-/.test(argv[i])) {
+    if (/^\-+(dev|prod)/.test(argv[i])) {
         env = argv[i].replace(/\-+/,'');
     }
 }

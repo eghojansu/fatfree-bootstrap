@@ -64,9 +64,31 @@
         $(this).datetimepicker(option);
     });
     $('[data-provide=wysiwyg]').each(function() {
-        $(this).summernote({
+        var $this = $(this);
+        $this.summernote({
             height: 200,
-            minHeight: 100
+            minHeight: 100,
+            callbacks: {
+                onImageUpload: function(files) {
+                    data = new FormData();
+                    data.append("file", files[0]);
+                    $.ajax({
+                        data: data,
+                        type: "POST",
+                        url: app.path.upload_asset,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function(data) {
+                            if (data.success) {
+                                $this.summernote('insertImage', data.url);
+                            } else {
+                                alert(data.message);
+                            }
+                        }
+                    });
+                }
+            }
         });
     });
     $('.form-filter').each(function() {

@@ -9,7 +9,7 @@ class AccountController extends Controller
 {
     public function updateAction(Base $app)
     {
-        $user = $this->user->getUser();
+        $user = $this->user;
         $this->validator->handle('account', function($app, $data) use ($user) {
             $user->copyfrom($data);
             $user->save();
@@ -23,7 +23,7 @@ class AccountController extends Controller
 
     public function logoutAction(Base $app)
     {
-        $this->user->logout();
+        $this->userManager->logout();
         $app->reroute('homepage');
     }
 }

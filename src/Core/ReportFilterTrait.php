@@ -17,7 +17,7 @@ trait ReportFilterTrait
     public function modifyReportFilter(
         Criteria $criteria,
         ReportSetup $setup,
-        $filterOn = 'created_at'
+        $filterOn = 'CreatedAt'
     ) {
         $dateA = $setup->getDateA();
         $dateB = $setup->getDateB();

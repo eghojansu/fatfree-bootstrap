@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Post;
-use App\Entity\Setting;
+use App\Entity\Configuration;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\UserLog;
@@ -14,7 +14,7 @@ class EntityLoader extends Prefab
 {
     private $map = [
         Post::class => 'post',
-        Setting::class => 'setting',
+        Configuration::class => 'configuration',
         User::class => 'user',
         UserLog::class => 'userLog',
         Task::class => 'task',

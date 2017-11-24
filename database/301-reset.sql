@@ -1,0 +1,21 @@
+--
+-- @desc Reset database content
+--
+
+SET FOREIGN_KEY_CHECKS=0;
+
+DELETE FROM `Configurations`;
+ALTER TABLE `Configurations` AUTO_INCREMENT=1;
+
+DELETE FROM `Posts`;
+ALTER TABLE `Posts` AUTO_INCREMENT=1;
+
+DELETE FROM `Users`;
+ALTER TABLE `Users` AUTO_INCREMENT=1;
+
+DELETE FROM `UserLogs`;
+
+DELETE FROM `Tasks`;
+ALTER TABLE `Tasks` AUTO_INCREMENT=1;
+
+SET FOREIGN_KEY_CHECKS=1;
