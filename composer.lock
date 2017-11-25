@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd6c779fb0b5dd3475eec8c57e3dcdac",
+    "content-hash": "4dc286cd62ba2f702aff8a7b69570300",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -84,16 +84,16 @@
         },
         {
             "name": "eghojansu/nutrition",
-            "version": "v4.3.0",
+            "version": "v4.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eghojansu/nutrition.git",
-                "reference": "7c3ab225c576a31294039844c22c5040f9c9d4b0"
+                "reference": "3941c62aeb6dafda55349a38dd4107d521f8964a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eghojansu/nutrition/zipball/7c3ab225c576a31294039844c22c5040f9c9d4b0",
-                "reference": "7c3ab225c576a31294039844c22c5040f9c9d4b0",
+                "url": "https://api.github.com/repos/eghojansu/nutrition/zipball/3941c62aeb6dafda55349a38dd4107d521f8964a",
+                "reference": "3941c62aeb6dafda55349a38dd4107d521f8964a",
                 "shasum": ""
             },
             "require": {
@@ -132,7 +132,7 @@
                 "user",
                 "validation"
             ],
-            "time": "2017-11-24T07:58:50+00:00"
+            "time": "2017-11-25T12:42:12+00:00"
         }
     ],
     "packages-dev": [],

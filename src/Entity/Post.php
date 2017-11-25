@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use Nutrition\SQL\Criteria;
 use Nutrition\SQL\Mapper;
+use Nutrition\Security\UserManager;
 use Nutrition\Utils\PaginationSetup;
+use Web;
 
 class Post extends Mapper
 {
@@ -73,6 +75,11 @@ class Post extends Mapper
 
     public function onMapBeforeInsert($that, array $pkeys)
     {
+        $that->Slug = Web::instance()->slug($that->Title);
+        $user = UserManager::instance()->getUser();
+        if ($user) {
+            $that->UserID = $user->ID;
+        }
         if (!$that->get('CreatedAt')) {
             $that->set('CreatedAt', self::sqlTimestamp());
         }

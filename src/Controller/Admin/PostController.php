@@ -27,8 +27,6 @@ class PostController extends Controller
         $post = $this->entity->post;
         $this->validator->handle('post', function($app, $data) use ($post) {
             $post->copyfrom($data);
-            $post->Slug = Web::instance()->slug($post->Title);
-            $post->UserID = $this->user->ID;
             $post->save();
             $this->flash->add('success', 'Data sudah disimpan');
 

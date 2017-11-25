@@ -38,7 +38,13 @@ class Setting extends MagicService
 
         $value = $raw ? $this->properties[$name] : $this->parse($name);
 
-        return $value===null ? $default : $value;
+        if (null == $value) {
+            $ref =& $default;
+        } else {
+            $ref =& $value;
+        }
+
+        return $ref;
     }
 
     public function set($name, $value)

@@ -3,6 +3,7 @@
 /node_modules/
 /dev/assets/
 /public/assets/
+/tests/web/assets/
 .env
 *.sublime-workspace
 !.htaccess
